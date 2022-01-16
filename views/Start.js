@@ -28,6 +28,7 @@ export default function Start() {
 
       const vmpk = WebMidi.getInputByName("out");
       vmpk.addListener("noteon", e => {
+        console.log(e);
         setNotes(notes => [...notes, e.note.identifier]);
       });
     }
