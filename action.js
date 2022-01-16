@@ -10,3 +10,7 @@ export function setNote(note){
 export function loop(){
     return({type:'LOOP'})
 }
+ 
+export function setStart(time){
+    return({type:'SET START', time:time})
+}

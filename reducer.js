@@ -12,6 +12,9 @@ export default function reducer(state, action) {
         case 'LOOP':
              const loop=state.looptemp;
             return {...state, loop: [...state.loop, loop], looptemp:[]}
+        case 'SET START':
+            console.log(action.time)
+            return {...state, start: action.time}
 
         default: return state
     }

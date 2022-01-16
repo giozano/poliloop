@@ -2,26 +2,24 @@ import { loop } from "../action";
 import { useStateValue } from "../state"
 
 export default function LoopStation(){
+    
     const [state, dispatch]=useStateValue();
-    //function cycleArray() {
-      //  let index = count % myArray.length;
-        //console.log(myArray[index]);
+    let count=0;
+    function cycleArray(array) {
+      let index = count % array.length;
+      console.log(array[index].note.identifier);
+      count++;
       
-    //    count++;
-      
-      
-      //setInterval(cycleArray, 200);}
-      function prova(){
-        return(<div>pollo</div>)
-      }
+    }
+    function withInterval(array){
+      setInterval(cycleArray(array),400)
+    }
 
     return(
         <div>
             <button onClick={()=>dispatch(loop())}>Loop</button>
             {console.log(state)}
-            {
-              prova()
-            }
+            {state.loop.map(e=>withInterval(e))}
             <button>Stop</button>
         </div>
     )
