@@ -3,8 +3,8 @@ import { useStateValue } from "../state"
 
 export default function LoopStation(){
     
-    const [state, dispatch]=useStateValue();
-    let count=0;
+    const [state, dispatch] = useStateValue();
+    let count = 0;
     function cycleArray(array) {
       let index = count % array.length;
       console.log(array[index].note.identifier);
@@ -19,7 +19,7 @@ export default function LoopStation(){
         <div>
             <button onClick={()=>dispatch(loop())}>Loop</button>
             {console.log(state)}
-            {state.loop.map(e=>withInterval(e))}
+            {state.loops.map(e=>withInterval(e))}
             <button>Stop</button>
         </div>
     )

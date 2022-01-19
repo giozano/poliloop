@@ -1,8 +1,5 @@
-
-
 const initialState={
-    looptemp: [],
-    loop:[],
-    poverini: []
+    currentLoop: [],
+    loops:[],
 }
 export default initialState

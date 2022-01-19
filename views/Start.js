@@ -7,13 +7,11 @@ import { setNote } from '../action';
 
 export default function Start() {
 
-  const [midiReady, setMidi] = useState(false);
   const [state, dispatch] = useStateValue();
-  const [visible, setVisible]=useState(true);
+  const [midiInput, setMidiInput] = useState(undefined);
+  const [startVisible, setStartVisible]= useState(true);
 
   function onStart() {
-    setVisible(false)
-    if(midiReady) return;
     WebMidi
       .enable()
       .then(onEnabled)
@@ -25,41 +23,55 @@ export default function Start() {
       console.log("No device detected");
     }
     else {
-      setMidi(true);
+      setStartVisible(false);
 
+      /* 
       WebMidi.inputs.forEach((device, index) => {
         console.log(index + ": " + device.name);
       });
+
       WebMidi.outputs.forEach((device, index) => {
         console.log(index + ": " + device.name);
       });
+      */
 
-      const vmpk = WebMidi.getInputByName("loopMIDI Port");
-      const output= WebMidi.getOutputByName('loopMIDI Port 1');
-      vmpk.addListener("noteon", e => {
+      const dummyInput = WebMidi.inputs[0];
+      setMidiInput(dummyInput);
+      dummyInput.addListener("noteon", e => {
         dispatch(setNote(e));
-        output.playNote(e.note)
       });
     }
   }
-  console.log(state.looptemp)
-  if(visible===true) return(
-    <div className="Start">
-        <button onClick={onStart} id='Start_Button'>START</button>
-    </div>
 
-  )
-  else
+  function onMidiInputChange() {
+    midiInput.removeListener();
+    var newMidiInput = WebMidi.getInputByName(document.getElementById("midiInputSelect").value);
+    setMidiInput(newMidiInput);
+    newMidiInput.addListener("noteon", e => {
+      dispatch(setNote(e));
+    });
+  }
 
-  return (
-    <div className="Start">
-      <ul className='notes'>
-          {console.log(state.looptemp)}
-          {state.looptemp.map((note, index) => <li key={index}>{note.note.identifier}</li>)}
-      </ul>
-      <button onClick={()=>setVisible(true)}>Back</button>
-      <LoopStation/> 
-    </div>
-    
-  );
+  if(startVisible) {
+    return(
+      <div className="Start">
+          <button onClick={onStart} id="startButton">START</button>
+      </div>
+    )
+  }
+  else {
+    return (
+      <div className="Start">
+        <select name="midiInput" id="midiInputSelect" onChange={onMidiInputChange}>
+          {WebMidi.inputs.map((device, index) => <option key={index} value={device.name}>{device.name}</option>)}
+        </select>
+        <ul className="notes">
+            {state.currentLoop.map((note, index) => <li key={index}>{note.note.identifier}</li>)}
+        </ul>
+        <button onClick={() => setStartVisible(true)}>Back</button>
+        <LoopStation/>
+      </div>
+      
+    );
+  }
 }
