@@ -1,11 +1,11 @@
-export function setNote(note){
-    return({type: 'SET NOTE', note:note})
+export function addNote(note) {
+    return({type: 'ADD NOTE', note:note})
 }
 
-export function loop(){
-    return({type:'LOOP'})
+export function addLoop() {
+    return({type:'ADD LOOP'})
 }
- 
-export function setStart(time){
-    return({type:'SET START', time:time})
+
+export function setStartTime(time) {
+    return({type:'SET START TIME', time:time})
 }

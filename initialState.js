@@ -1,5 +1,7 @@
-const initialState={
+const initialState = {
+    audioCtx: new AudioContext(),
+    startTime: 0,
     currentLoop: [],
-    loops:[],
+    loops: [],
 }
 export default initialState

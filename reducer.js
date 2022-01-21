@@ -1,16 +1,15 @@
-import react from "react"
+import react from "react";
 
 export default function reducer(state, action) {
     switch(action.type){
-        case 'SET NOTE':
-            console.log(action.note)
+        case 'ADD NOTE':
             return {...state, currentLoop: [...state.currentLoop, action.note]}
-        case 'LOOP':
-             const loop = state.currentLoop;
+        case 'ADD LOOP':
+            const loop = state.currentLoop;
             return {...state, loops: [...state.loops, loop], currentLoop:[]}
-        case 'SET START':
-            console.log(action.time)
-            return {...state, start: action.time}
+        case 'SET START TIME':
+            console.log("START TIME: " + action.time)
+            return {...state, startTime: action.time}
 
         default: return state
     }

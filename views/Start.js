@@ -3,19 +3,23 @@ import { useState } from 'react';
 import { WebMidi } from "webmidi";
 import LoopStation from './LoopStation';
 import { useStateValue } from '../state';
-import { setNote } from '../action';
+import { addNote, setStartTime } from '../action';
 
 export default function Start() {
 
   const [state, dispatch] = useStateValue();
+  const [midiReady, setMidiReady] = useState(false);
   const [midiInput, setMidiInput] = useState(undefined);
   const [startVisible, setStartVisible]= useState(true);
 
   function onStart() {
-    WebMidi
+    dispatch(setStartTime(WebMidi.time));
+    if(!midiReady) {
+      WebMidi
       .enable()
       .then(onEnabled)
       .catch(err => alert(err));
+    }
   }
 
   function onEnabled() {
@@ -23,8 +27,6 @@ export default function Start() {
       console.log("No device detected");
     }
     else {
-      setStartVisible(false);
-
       /* 
       WebMidi.inputs.forEach((device, index) => {
         console.log(index + ": " + device.name);
@@ -38,8 +40,11 @@ export default function Start() {
       const dummyInput = WebMidi.inputs[0];
       setMidiInput(dummyInput);
       dummyInput.addListener("noteon", e => {
-        dispatch(setNote(e));
+        dispatch(addNote(e));
       });
+
+      setStartVisible(false);
+      setMidiReady(true);
     }
   }
 
@@ -48,7 +53,7 @@ export default function Start() {
     var newMidiInput = WebMidi.getInputByName(document.getElementById("midiInputSelect").value);
     setMidiInput(newMidiInput);
     newMidiInput.addListener("noteon", e => {
-      dispatch(setNote(e));
+      dispatch(addNote(e));
     });
   }
 
@@ -65,9 +70,6 @@ export default function Start() {
         <select name="midiInput" id="midiInputSelect" onChange={onMidiInputChange}>
           {WebMidi.inputs.map((device, index) => <option key={index} value={device.name}>{device.name}</option>)}
         </select>
-        <ul className="notes">
-            {state.currentLoop.map((note, index) => <li key={index}>{note.note.identifier}</li>)}
-        </ul>
         <button onClick={() => setStartVisible(true)}>Back</button>
         <LoopStation/>
       </div>
