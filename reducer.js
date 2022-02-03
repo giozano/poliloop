@@ -7,10 +7,5 @@ export default function reducer(state, action) {
         case 'ADD LOOP':
             const loop = state.currentLoop;
             return {...state, loops: [...state.loops, loop], currentLoop:[]}
-        case 'SET START TIME':
-            console.log("START TIME: " + action.time)
-            return {...state, startTime: action.time}
-
-        default: return state
     }
 }

@@ -1,20 +1,21 @@
 import './Start.css';
 import { useState } from 'react';
 import { WebMidi } from "webmidi";
-import LoopStation from './LoopStation';
+import * as Tone from 'tone';
+import Recorder from './Recorder';
 import { useStateValue } from '../state';
-import { addNote, setStartTime } from '../action';
+import { addNote } from '../action';
 
 export default function Start() {
 
   const [state, dispatch] = useStateValue();
-  const [midiReady, setMidiReady] = useState(false);
+  const [audioReady, setAudioReady] = useState(false);
   const [midiInput, setMidiInput] = useState(undefined);
   const [startVisible, setStartVisible]= useState(true);
 
   function onStart() {
-    dispatch(setStartTime(WebMidi.time));
-    if(!midiReady) {
+    if(!audioReady) {
+      Tone.start();
       WebMidi
       .enable()
       .then(onEnabled)
@@ -27,34 +28,20 @@ export default function Start() {
       console.log("No device detected");
     }
     else {
-      /* 
-      WebMidi.inputs.forEach((device, index) => {
-        console.log(index + ": " + device.name);
-      });
-
-      WebMidi.outputs.forEach((device, index) => {
-        console.log(index + ": " + device.name);
-      });
-      */
-
       const dummyInput = WebMidi.inputs[0];
+
       setMidiInput(dummyInput);
-      dummyInput.addListener("noteon", e => {
-        dispatch(addNote(e));
-      });
 
       setStartVisible(false);
-      setMidiReady(true);
+      setAudioReady(true);
     }
   }
 
+  // Change input device
   function onMidiInputChange() {
     midiInput.removeListener();
     var newMidiInput = WebMidi.getInputByName(document.getElementById("midiInputSelect").value);
     setMidiInput(newMidiInput);
-    newMidiInput.addListener("noteon", e => {
-      dispatch(addNote(e));
-    });
   }
 
   if(startVisible) {
@@ -71,9 +58,8 @@ export default function Start() {
           {WebMidi.inputs.map((device, index) => <option key={index} value={device.name}>{device.name}</option>)}
         </select>
         <button onClick={() => setStartVisible(true)}>Back</button>
-        <LoopStation/>
+        <Recorder midiInput={midiInput}/>
       </div>
-      
     );
   }
 }

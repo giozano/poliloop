@@ -1,13 +1,12 @@
-import * as Tone from 'tone';
 import { addLoop } from "../action";
 import { useStateValue } from "../state";
 
-export default function LoopStation(){
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioCtx = new AudioContext();
+
+export default function LoopStation() {
     
   const [state, dispatch] = useStateValue();
-
-  const AudioContext = window.AudioContext || window.webkitAudioContext;
-  const audioCtx = new AudioContext();
 
   let tempo = 60.0;
   const lookahead = 25.0; // How frequently to call scheduling function (in milliseconds)
