@@ -37,6 +37,9 @@ export default function Recorder(props) {
         const part = new Tone.Part(((time, note) => {
             synth.triggerAttackRelease(note, "8n", time);
         }), state.currentLoop).start(0);
+        part.loop = true;
+        part.loopStart = 0;
+        part.loopEnd = 10;
         Tone.Transport.start();
         console.log("PLAY");
     }
