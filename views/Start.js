@@ -16,6 +16,7 @@ export default function Start() {
   function onStart() {
     if(!audioReady) {
       Tone.start();
+      Tone.context.lookAhead = 0;
       WebMidi
       .enable()
       .then(onEnabled)
