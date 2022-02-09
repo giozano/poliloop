@@ -9,10 +9,7 @@ const noteDuration = "8n";
 
 // METRONOME
 Tone.Transport.bpm.value = 60;
-const metronomeSynth = new Tone.Synth().toDestination();
-const metronome = new Tone.Loop(time => {
-    metronomeSynth.triggerAttackRelease("C3", "8n", time);
-}, "4n").start(0);
+const metronome = new Tone.Synth().toDestination();
 
 // TRACK
 let track = undefined;
@@ -28,21 +25,27 @@ const keys = new Tone.PolySynth(Tone.Synth, {
 export default function Recorder(props) {
 
     const [state, dispatch] = useStateValue();
-    const [startRec, setStartRec] = useState(0);
-    const [stopRec, setStopRec] = useState(0);
+    const [startRec, setStartRec] = useState(false);
+    const [stopRec, setStopRec] = useState(false);
 
     function record() {
         if(startRec) return;
 
+        setStartRec(true);
+        setStopRec(false);
+
+        let startTime = 0;
+
+        Tone.Transport.scheduleRepeat((time) => {
+            metronome.triggerAttackRelease("C3", "8n", time);
+            console.log("Metronome time " + time);
+            if(!startTime) startTime = time;
+        }, "4n");
+
         Tone.Transport.start();
 
-        const startTime = WebMidi.time;
-        setStartRec(startTime);
-        setStopRec(0);
-
         props.midiInput.addListener("noteon", e => {
-            keys.triggerAttackRelease(e.note.identifier, noteDuration, Tone.context.currentTime);
-            const note = [(e.timestamp-startTime)/1000, e.note.identifier];
+            const note = [Tone.immediate()-startTime, e.note.identifier];
             dispatch(addNote(note));
         });
 
@@ -52,19 +55,19 @@ export default function Recorder(props) {
     function stop() {
         if(!startRec) return;
 
-        Tone.Transport.stop();
+        setStartRec(false);
+        setStopRec(true);
 
-        setStartRec(0);
-        const stopTime = (WebMidi.time - startRec) / 1000;
-        setStopRec(stopTime);
+        Tone.Transport.stop();
 
         props.midiInput.removeListener();
 
         track = new Tone.Part(((time, note) => {
             keys.triggerAttackRelease(note, noteDuration, time);
+            console.log("Track time " + time);
         }), state.currentLoop).start(0);
         track.loop = true;
-        track.loopEnd = stopTime;
+        track.loopEnd = 20;
 
         console.log("STOP");
     }
@@ -72,7 +75,7 @@ export default function Recorder(props) {
     function play() {
         if(!stopRec) return;
 
-        Tone.Transport.start();
+        Tone.Transport.toggle();
 
         console.log("PLAY");
     }

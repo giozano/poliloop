@@ -15,18 +15,20 @@ export default function Start() {
 
   function onStart() {
     if(!audioReady) {
-      Tone.start();
-      Tone.context.lookAhead = 0;
+      Tone.start().then(() => {
+        console.log("Tone is ready");
+      });
       WebMidi
       .enable()
-      .then(onEnabled)
+      .then(onMidiEnabled)
       .catch(err => alert(err));
     }
   }
 
-  function onEnabled() {
+  function onMidiEnabled() {
+    console.log("WebMidi is ready");
     if (WebMidi.inputs.length < 1) {
-      console.log("No device detected");
+      console.log("WebMidi: No device detected");
     }
     else {
       const dummyInput = WebMidi.inputs[0];
