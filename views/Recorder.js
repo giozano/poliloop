@@ -34,18 +34,14 @@ export default function Recorder(props) {
         setStartRec(true);
         setStopRec(false);
 
-        let startTime = 0;
-
         Tone.Transport.scheduleRepeat((time) => {
             metronome.triggerAttackRelease("C3", "8n", time);
-            console.log("Metronome time " + time);
-            if(!startTime) startTime = time;
         }, "4n");
 
         Tone.Transport.start();
 
         props.midiInput.addListener("noteon", e => {
-            const note = [Tone.immediate()-startTime, e.note.identifier];
+            const note = [Tone.Transport.seconds, e.note.identifier];
             dispatch(addNote(note));
         });
 
@@ -64,7 +60,6 @@ export default function Recorder(props) {
 
         track = new Tone.Part(((time, note) => {
             keys.triggerAttackRelease(note, noteDuration, time);
-            console.log("Track time " + time);
         }), state.currentLoop).start(0);
         track.loop = true;
         track.loopEnd = 20;
@@ -75,7 +70,7 @@ export default function Recorder(props) {
     function play() {
         if(!stopRec) return;
 
-        Tone.Transport.toggle();
+        Tone.Transport.start();
 
         console.log("PLAY");
     }
