@@ -32,9 +32,6 @@ export default function Track({play}) {
   }
 
 
-<<<<<<< Updated upstream
-  return(
-=======
   return (
     <div className="tracks">
       {state.loops.map((loop) => {
@@ -69,7 +66,6 @@ export default function Track({play}) {
           </div>
         );
       })}
->>>>>>> Stashed changes
       <div className="track">
         <svg width="100%" height="100%">
           <line
