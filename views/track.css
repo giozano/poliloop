@@ -1,0 +1,45 @@
+:root{
+    --loop-time:10000ms;
+    --stop:0%;
+}
+
+.track{
+    border: solid 4px rgb(65, 65, 65);
+    height: 10vh;
+    margin: 1%;
+    padding:1%;
+    border-radius: 10px;
+}
+
+.bars{
+    stroke:rgb(107, 107, 107);
+    stroke-width:2;
+}
+
+.note{
+    stroke:rgb(0, 0, 0);
+    stroke-width:2;
+    fill: none;
+}
+
+.cursor-line{
+    stroke:rgb(255,0,0);
+    stroke-width:4;
+    transform: translateX(var(--stop));
+}
+
+.cursor-line.on{
+    animation-name: cursor;
+    animation-duration:var(--loop-time);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite; 
+}
+
+@keyframes cursor {
+    from{
+        transform: none;
+    }
+    to{
+        transform: translateX(100%);
+    }
+}

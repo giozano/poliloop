@@ -1,6 +1,7 @@
 import * as Tone from 'tone';
 import { useStateValue } from '../state';
 import * as Synth from '../utils/synthesizers';
+import Track from './Track';
 
 export default function Recorder(props) {
     
@@ -21,6 +22,7 @@ export default function Recorder(props) {
         Tone.Transport.start();
 
         console.log("RECORD");
+
     }
 
     function stop() {
@@ -43,7 +45,6 @@ export default function Recorder(props) {
 
         Tone.Transport.toggle(); 
     }
-
     return(
         <div>
             <ul className="notes">
