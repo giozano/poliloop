@@ -1,6 +1,7 @@
 import * as Tone from 'tone';
 import { useStateValue } from '../state';
 import * as Synth from '../utils/synthesizers';
+import { setStartRec, setStopRec } from '../action';
 import Track from './Track';
 
 export default function Recorder(props) {
@@ -16,19 +17,18 @@ export default function Recorder(props) {
 
     function record() {
         if(state.startRec) return;
-        props.recOn(true);
-        props.recOff(false);
+        dispatch(setStartRec(true));
+        dispatch(setStopRec(false));
 
         Tone.Transport.start();
 
         console.log("RECORD");
-
     }
 
     function stop() {
         if(!state.startRec) return;
-        props.recOn(false);
-        props.recOff(true);
+        dispatch(setStartRec(false));
+        dispatch(setStopRec(true));
 
         Tone.Transport.stop();
 

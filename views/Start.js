@@ -4,7 +4,7 @@ import { WebMidi } from "webmidi";
 import * as Tone from 'tone';
 import Recorder from './Recorder';
 import { useStateValue } from '../state';
-import { addNote, setStartRec, setStopRec } from '../action';
+import { addNote } from '../action';
 import * as Synth from '../utils/synthesizers';
 import { polyrhythms } from '../utils/functions';
 
@@ -91,16 +91,6 @@ export default function Start() {
     });
   }
 
-  function recOn(r) {
-    console.log("recOn");
-    dispatch(setStartRec(r));
-  }
-
-  function recOff(r) {
-    console.log("recOff");
-    dispatch(setStopRec(r));
-  }
-
   if(startVisible) {
     return(
       <div className="Start">
@@ -115,10 +105,8 @@ export default function Start() {
           {WebMidi.inputs.map((device, index) => <option key={index} value={device.name}>{device.name}</option>)}
         </select>
         <button onClick={() => setStartVisible(true)}>Back</button>
-        <Recorder 
+        <Recorder
           loopTime={loopTime}
-          recOn={recOn}
-          recOff={recOff}
         />
       </div>
     );
