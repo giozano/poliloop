@@ -1,78 +1,47 @@
 import * as Tone from 'tone';
-import { WebMidi } from "webmidi";
-import { useState } from 'react';
 import { useStateValue } from '../state';
-import { addNote } from "../action";
-
-// SETTINGS
-const noteDuration = "8n";
-
-// METRONOME
-Tone.Transport.bpm.value = 60;
-const metronome = new Tone.Synth().toDestination();
-
-// TRACK
-let track = undefined;
-
-// INSTRUMENTS
-const keys = new Tone.PolySynth(Tone.Synth, {
-    volume: -2,
-    oscillator: {
-        partials: [1, 2, 1],
-    },
-}).toDestination();
+import * as Synth from '../utils/synthesizers';
 
 export default function Recorder(props) {
-
+    
     const [state, dispatch] = useStateValue();
-    const [startRec, setStartRec] = useState(false);
-    const [stopRec, setStopRec] = useState(false);
+
+    let track = undefined;
+
+    Tone.Transport.bpm.value = state.bpm;
+    Tone.Transport.loop = true;
+    Tone.Transport.loopStart = 0;
+    Tone.Transport.loopEnd = props.loopTime;
 
     function record() {
-        if(startRec) return;
-
-        setStartRec(true);
-        setStopRec(false);
-
-        Tone.Transport.scheduleRepeat((time) => {
-            metronome.triggerAttackRelease("C3", "8n", time);
-        }, "4n");
+        if(state.startRec) return;
+        props.recOn(true);
+        props.recOff(false);
 
         Tone.Transport.start();
-
-        props.midiInput.addListener("noteon", e => {
-            const note = [Tone.Transport.seconds, e.note.identifier];
-            dispatch(addNote(note));
-        });
 
         console.log("RECORD");
     }
 
     function stop() {
-        if(!startRec) return;
-
-        setStartRec(false);
-        setStopRec(true);
+        if(!state.startRec) return;
+        props.recOn(false);
+        props.recOff(true);
 
         Tone.Transport.stop();
 
-        props.midiInput.removeListener();
+        track = new Tone.Part(function(time,value) {
+            Synth.keys.triggerAttackRelease(value.note, value.duration, time);
+        }, state.currentLoop).start(0);
 
-        track = new Tone.Part(((time, note) => {
-            keys.triggerAttackRelease(note, noteDuration, time);
-        }), state.currentLoop).start(0);
         track.loop = true;
-        track.loopEnd = 20;
-
-        console.log("STOP");
+        track.loopEnd = props.loopTime;
     }
 
     function play() {
-        if(!stopRec) return;
+        if(!state.stopRec) return;
 
-        Tone.Transport.start();
-
-        console.log("PLAY");
+        Tone.Transport.toggle(); 
     }
 
     return(
@@ -81,7 +50,7 @@ export default function Recorder(props) {
                 {
                     state.currentLoop.map((note, index) =>
                         {
-                            return <li key={index}>[{ note[0] + ", " + note[1] }]</li>
+                            return <li key={index}>[{ note.note + ", " + note.duration }]</li>
                         }
                     )
                 }
