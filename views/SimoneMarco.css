@@ -61,7 +61,7 @@
 
 /*div in which tracks will be plotted*/
 .track{
-  width:98%;
+  /*width:98%;*/
   height:100%;
   border-radius:10px;
   border-style:solid;

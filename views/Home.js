@@ -7,7 +7,7 @@ export default function Home(){
                 <ul>
                     <li data-text="BPM"><a href="#">BPM 
                         <div className="slidecontainer">
-                            <input type="range" min="10" max="400" value="1" className="slider" id="myRange" onchange="rangevalue.value=value"/>
+                            <input type="range" min="10" max="400" value="1" className="slider" id="myRange" onChange="rangevalue.value=value"/>
                             <output id="rangevalue">0</output>
                         </div></a>
                     </li>
@@ -38,6 +38,8 @@ export default function Home(){
                     </a></li>
       
                     <li data-text="polyrhythm"><a href="#">polyrhythm
+                    </a></li>
+                    <li data-text="start"><a href="#">START
                     </a></li>
                 </ul>
  
