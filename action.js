@@ -1,5 +1,5 @@
-export function addNote(note) {
-    return({type: 'ADD NOTE', note: note});
+export function addNote(note, instrument) {
+    return({type: 'ADD NOTE', note: note, instrument: instrument});
 }
 
 export function addLoop() {

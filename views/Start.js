@@ -20,12 +20,18 @@ export default function Start() {
   const loopTime = (60/state.bpm)*state.bars*state.bpb;
   const metronomeLoopTime = loopTime/state.bars;
 
+  // currentInstument
+  const instrumentRef = React.useRef(state.currentInstrument);
+  const changeInstrument = index => {
+    instrumentRef.current = index;
+    dispatch(changeInstrument(index));
+  };
+
   // To manage startRec and stopRec
   const [startRec, setStartRec] = React.useState(false);
   const [stopRec, setStopRec] = React.useState(false);
   const startRecRef = React.useRef(startRec);
   const stopRecRef = React.useRef(stopRec);
-  
   const recOn = on => {
     startRecRef.current = on;
     setStartRec(on);
@@ -104,7 +110,7 @@ export default function Start() {
         };
         noteCur.delete(key);
         console.log(startRecRef.current);
-        if(startRecRef.current) dispatch(addNote(note));
+        if(startRecRef.current) dispatch(addNote(note, instrumentRef.current));
       }
     });
   }
@@ -129,6 +135,7 @@ export default function Start() {
           stopRec = {stopRecRef.current}
           recOn = {recOn}
           recOff = {recOff}
+          changeInstrument = {changeInstrument}
         />
       </div>
     );
