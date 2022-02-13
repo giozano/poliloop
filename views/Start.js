@@ -25,6 +25,7 @@ export default function Start() {
   const [stopRec, setStopRec] = React.useState(false);
   const startRecRef = React.useRef(startRec);
   const stopRecRef = React.useRef(stopRec);
+  
   const recOn = on => {
     startRecRef.current = on;
     setStartRec(on);

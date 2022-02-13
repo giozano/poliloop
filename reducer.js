@@ -3,10 +3,10 @@ export default function reducer(state, action) {
         case 'ADD NOTE':
             console.log(state.loop)
             if(state.currentLoop.length!=0 && state.currentLoop[state.currentLoop.length-1].time>action.note.time)
-                return {...state,currentLoop:[...state.currentLoop,action.note],loop:state.loop+1}
+                return {...state,loop:state.loop+1, loops: [...state.loops, state.currentLoop.filter(e=>state.currentLoop.indexOf(e) >= state.counter)],counter:state.currentLoop.length,currentLoop:[...state.currentLoop,action.note]}
             
             else if(state.currentLoop.length===0) 
-                return {...state, currentLoop: [...state.currentLoop, action.note], loop:0}
+                return {...state, currentLoop: [...state.currentLoop, action.note], loop:1, loops:[], counter:0}
             
             else return {...state, currentLoop: [...state.currentLoop, action.note]}
         case 'ADD LOOP':

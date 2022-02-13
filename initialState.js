@@ -8,7 +8,9 @@ const initialState = {
     bass: [],
     currentInstrument: 0,
     currentLoop: [],
-    loop: 0,
+    loop: 1,
+    loops:[],
+    counter:0
 }
 
 export default initialState;
