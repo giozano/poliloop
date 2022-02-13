@@ -18,29 +18,53 @@ export default function Recorder(props) {
     Tone.Transport.loopEnd = props.loopTime;
 
     function record() {
-        if(props.startRec) return;
-        setAnimation("on");
+        //if(props.startRec) return;
+        setAnimation("on");//controllare
 
-        console.log("COUNT IN");
+        if (Tone.Transport.state=="stopped") {
 
-        // Count in
-        let startCount=props.loopTime-(60/state.bpm)*state.bpb-0.001;
-        Tone.Transport.position=startCount;
+            console.log("COUNT IN");
 
-        Tone.Transport.start();
+            // Count in
+            let startCount = props.loopTime-(60/state.bpm)*state.bpb-0.001;
+            Tone.Transport.position = startCount;
 
-        Tone.Transport.scheduleOnce((time) => {
-            props.recOn(true);
-            props.recOff(false);
-            console.log("RECORD");
-        }, props.loopTime-0.01);
+            Tone.Transport.scheduleOnce((time) => {
+                props.recOn(true);
+                props.recOff(false);
+                console.log("RECORD");
+            }, props.loopTime-0.01);
+
+            Tone.Transport.start();
+        }
+        else if (Tone.Transport.state=="started"){
+            console.log("Record transport true");
+            if (props.startRec){
+                console.log("Record salva");
+                track = new Tone.Part(function(time,value) {
+                    Synth.keys.triggerAttackRelease(value.note, value.duration, time);
+                }, state.currentLoop).start(0);
+        
+                track.loop = true;
+                track.loopEnd = props.loopTime;
+                props.recOn(false);
+                props.recOff(true);
+            }
+            else {
+                console.log("Record e basta");
+                props.recOn(true);
+                props.recOff(false);
+                console.log("RECORD");
+            }
+        }
+
     }
 
     function stop() {
-        if(!props.startRec) return;
+        //if(!props.startRec) return;
         props.recOn(false);
         props.recOff(true);
-        setAnimation("");
+        setAnimation("");//???
 
         Tone.Transport.stop();
 
@@ -55,13 +79,12 @@ export default function Recorder(props) {
     }
 
     function play() {
-        if(!props.stopRec) return;
-        setAnimation("on");
-
-        Tone.Transport.toggle(); 
-        console.log("PLAY");
+        //setAnimation("on");
+        if (Tone.Transport.state==="stopped"){
+            Tone.Transport.start(); 
+            console.log("PLAY");
+        }
     }
-    
     return(
         <div>
             <ul className="notes" style={{display:"flex", flexDirection:"column"}}>
