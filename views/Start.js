@@ -87,7 +87,9 @@ export default function Start() {
       // attack
       if(e.message.type==="noteon") {
         Synth.keys.triggerAttack(Tone.Frequency(e.data[1],"midi"), Tone.now());
-        noteCur.set(e.data[1],[(Tone.Transport.progress-latencyOffset)*loopTime,e.timestamp]);
+        let noteCurTime = Tone.Transport.progress*loopTime-latencyOffset;
+        if (noteCurTime<0) noteCurTime=0;
+        noteCur.set(e.data[1],[noteCurTime,e.timestamp]);
       }
       // release
       else if(e.message.type==="noteoff") {

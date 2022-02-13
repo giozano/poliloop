@@ -21,16 +21,19 @@ export default function Recorder(props) {
         if(props.startRec) return;
         setAnimation("on");
 
-
         console.log("COUNT IN");
+
+        // Count in
+        let startCount=props.loopTime-(60/state.bpm)*state.bpb-0.001;
+        Tone.Transport.position=startCount;
+
+        Tone.Transport.start();
 
         Tone.Transport.scheduleOnce((time) => {
             props.recOn(true);
             props.recOff(false);
             console.log("RECORD");
-        }, props.loopTime/state.bars);
-
-        Tone.Transport.start();
+        }, props.loopTime-0.01);
     }
 
     function stop() {
@@ -58,6 +61,7 @@ export default function Recorder(props) {
         Tone.Transport.toggle(); 
         console.log("PLAY");
     }
+    
     return(
         <div>
             <ul className="notes" style={{display:"flex", flexDirection:"column"}}>

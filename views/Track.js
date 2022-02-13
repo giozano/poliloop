@@ -8,9 +8,9 @@ const prova = [
 ];
 
 export default function Track({play}) {
-  let bpm = 60;
-  let bar = 4;
-  let metric = 4;
+  let bpm = state.bpm;
+  let bar = state.bars;
+  let metric = state.bpb;
   let bars = [];
   const [state, dispatch] = useStateValue();
 
@@ -29,7 +29,7 @@ export default function Track({play}) {
   }
   console.log(play)
 
-  return (
+  return(
       <div className="track">
         <svg width="100%" height="100%">
           <line x1="0" y1="0" x2="0" y2="100%" className={"cursor-line " + play}  />
