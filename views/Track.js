@@ -8,11 +8,13 @@ const prova = [
 ];
 
 export default function Track({play}) {
-  let bpm = 60;
-  let bar = 4;
-  let metric = 4;
+
   let bars = [];
   const [state, dispatch] = useStateValue();
+  
+  let bar=state.bars
+  let bpm=state.bpm
+  let metric=state.bpb
 
   let time_loop = (metric * bar * 60000) / bpm;
   let time_loop_ms = time_loop + "ms";
