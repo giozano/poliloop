@@ -1,9 +1,9 @@
 const initialState = {
     bpm: 60,
     bpb: 4,
-    bars: 2,
+    bars: 4,
     currentLoop: [],
-    loops: []
+    loop: 0,
 }
 
 export default initialState;
