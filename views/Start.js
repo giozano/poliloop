@@ -20,16 +20,15 @@ export default function Start() {
   const loopTime = (60/state.bpm)*state.bars*state.bpb;
   const metronomeLoopTime = loopTime/state.bars;
 
+  // To manage startRec and stopRec
   const [startRec, setStartRec] = React.useState(false);
   const [stopRec, setStopRec] = React.useState(false);
   const startRecRef = React.useRef(startRec);
   const stopRecRef = React.useRef(stopRec);
-
   const recOn = on => {
     startRecRef.current = on;
     setStartRec(on);
   };
-
   const recOff = off => {
     stopRecRef.current = off;
     setStopRec(off);

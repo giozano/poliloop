@@ -17,12 +17,16 @@ export default function Recorder(props) {
 
     function record() {
         if(props.startRec) return;
-        props.recOn(true);
-        props.recOff(false);
+
+        console.log("COUNT IN");
+
+        Tone.Transport.schedule((time) => {
+            props.recOn(true);
+            props.recOff(false);
+            console.log("RECORD");
+        }, props.loopTime/state.bars);
 
         Tone.Transport.start();
-
-        console.log("RECORD");
     }
 
     function stop() {
