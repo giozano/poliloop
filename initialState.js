@@ -3,9 +3,7 @@ const initialState = {
     bpb: 4,
     bars: 2,
     currentLoop: [],
-    loops: [],
-    startRec: false,
-    stopRec: false
+    loops: []
 }
 
 export default initialState;

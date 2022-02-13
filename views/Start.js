@@ -1,5 +1,5 @@
 import './Start.css';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { WebMidi } from "webmidi";
 import * as Tone from 'tone';
 import Recorder from './Recorder';
@@ -19,6 +19,21 @@ export default function Start() {
   const noteCur = new Map();
   const loopTime = (60/state.bpm)*state.bars*state.bpb;
   const metronomeLoopTime = loopTime/state.bars;
+
+  const [startRec, setStartRec] = React.useState(false);
+  const [stopRec, setStopRec] = React.useState(false);
+  const startRecRef = React.useRef(startRec);
+  const stopRecRef = React.useRef(stopRec);
+
+  const recOn = on => {
+    startRecRef.current = on;
+    setStartRec(on);
+  };
+
+  const recOff = off => {
+    stopRecRef.current = off;
+    setStopRec(off);
+  };
 
   let metronomes;
   
@@ -78,15 +93,16 @@ export default function Start() {
       // release
       else if(e.message.type==="noteoff") {
         Synth.keys.triggerRelease(Tone.now());
-        let duration = (e.timestamp-noteCur.get(e.data[1])[1])/1000;
+        const key = e.data[1];
+        let duration = (e.timestamp-noteCur.get(key)[1])/1000;
         const note = {
-          "time": noteCur.get(e.data[1])[0],
-          "note": Tone.Frequency(e.data[1],"midi"),
+          "time": noteCur.get(key)[0],
+          "note": Tone.Frequency(key,"midi"),
           "duration": duration
         };
-        noteCur.delete(e.data[1]);
-        console.log(state.startRec);
-        if(state.startRec) dispatch(addNote(note));
+        noteCur.delete(key);
+        console.log(startRecRef.current);
+        if(startRecRef.current) dispatch(addNote(note));
       }
     });
   }
@@ -105,8 +121,12 @@ export default function Start() {
           {WebMidi.inputs.map((device, index) => <option key={index} value={device.name}>{device.name}</option>)}
         </select>
         <button onClick={() => setStartVisible(true)}>Back</button>
-        <Recorder
-          loopTime={loopTime}
+        <Recorder 
+          loopTime = {loopTime}
+          startRec = {startRecRef.current}
+          stopRec = {stopRecRef.current}
+          recOn = {recOn}
+          recOff = {recOff}
         />
       </div>
     );

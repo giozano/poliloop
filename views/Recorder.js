@@ -16,9 +16,9 @@ export default function Recorder(props) {
     Tone.Transport.loopEnd = props.loopTime;
 
     function record() {
-        if(state.startRec) return;
-        dispatch(setStartRec(true));
-        dispatch(setStopRec(false));
+        if(props.startRec) return;
+        props.recOn(true);
+        props.recOff(false);
 
         Tone.Transport.start();
 
@@ -26,9 +26,9 @@ export default function Recorder(props) {
     }
 
     function stop() {
-        if(!state.startRec) return;
-        dispatch(setStartRec(false));
-        dispatch(setStopRec(true));
+        if(!props.startRec) return;
+        props.recOn(false);
+        props.recOff(true);
 
         Tone.Transport.stop();
 
@@ -38,12 +38,16 @@ export default function Recorder(props) {
 
         track.loop = true;
         track.loopEnd = props.loopTime;
+
+        console.log("STOP");
     }
 
     function play() {
-        if(!state.stopRec) return;
+        if(!props.stopRec) return;
 
         Tone.Transport.toggle(); 
+
+        console.log("PLAY");
     }
     return(
         <div>
