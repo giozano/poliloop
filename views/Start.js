@@ -20,6 +20,13 @@ export default function Start() {
   const loopTime = (60/state.bpm)*state.bars*state.bpb;
   const metronomeLoopTime = loopTime/state.bars;
 
+  // currentInstument
+  const instrumentRef = React.useRef(state.currentInstrument);
+  const changeInstrument = index => {
+    instrumentRef.current = index;
+    dispatch(changeInstrument(index));
+  };
+
   // To manage startRec and stopRec
   const [startRec, setStartRec] = React.useState(false);
   const [stopRec, setStopRec] = React.useState(false);
@@ -87,7 +94,9 @@ export default function Start() {
       // attack
       if(e.message.type==="noteon") {
         Synth.keys.triggerAttack(Tone.Frequency(e.data[1],"midi"), Tone.now());
-        noteCur.set(e.data[1],[(Tone.Transport.progress-latencyOffset)*loopTime,e.timestamp]);
+        let noteCurTime = Tone.Transport.progress*loopTime-latencyOffset;
+        if (noteCurTime<0) noteCurTime=0;
+        noteCur.set(e.data[1],[noteCurTime,e.timestamp]);
       }
       // release
       else if(e.message.type==="noteoff") {
@@ -101,7 +110,7 @@ export default function Start() {
         };
         noteCur.delete(key);
         console.log(startRecRef.current);
-        if(startRecRef.current) dispatch(addNote(note));
+        if(startRecRef.current) dispatch(addNote(note, instrumentRef.current));
       }
     });
   }
@@ -126,6 +135,7 @@ export default function Start() {
           stopRec = {stopRecRef.current}
           recOn = {recOn}
           recOff = {recOff}
+          changeInstrument = {changeInstrument}
         />
       </div>
     );

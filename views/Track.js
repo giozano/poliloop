@@ -4,15 +4,18 @@ import "./track.css";
 const prova = [
   [1, 2],
   [3, 5],
-  [7,10.5]
+  [7,10.5],
 ];
 
 export default function Track({play}) {
-  let bpm = 60;
-  let bar = 4;
-  let metric = 4;
   let bars = [];
   const [state, dispatch] = useStateValue();
+
+  let bar=state.bars
+  let bpm=state.bpm
+  let metric=state.bpb
+  let current_note=0
+  let number_loop=1
 
   let time_loop = (metric * bar * 60000) / bpm;
   let time_loop_ms = time_loop + "ms";
@@ -27,21 +30,71 @@ export default function Track({play}) {
       <line x1={position} y1="0" x2={position} y2="100%" className="bars" />
     );
   }
-  console.log(play)
+
 
   return (
+    <div className="tracks">
+      {state.loops.map((loop) => {
+        return (
+          <div className="track">
+            <svg width="100%" height="100%">
+              <line
+                x1="0"
+                y1="0"
+                x2="0"
+                y2="100%"
+                className={"cursor-line " + play}
+              />
+              {bars}
+              {
+                loop.map((note, index) => {
+                  let x = (note.time * 1000 * 100) / time_loop + "%";
+                  let width = (note.duration * 1000 * 100) / time_loop + "%";
+                  return (
+                    <rect
+                      x={x}
+                      y="40%"
+                      rx="2px"
+                      id={index}
+                      width={width}
+                      height="20%"
+                      className="note"
+                    />
+                  );
+                })}
+            </svg>
+          </div>
+        );
+      })}
       <div className="track">
         <svg width="100%" height="100%">
-          <line x1="0" y1="0" x2="0" y2="100%" className={"cursor-line " + play}  />
+          <line
+            x1="0"
+            y1="0"
+            x2="0"
+            y2="100%"
+            className={"cursor-line " + play}
+          />
           {bars}
-          {state.currentLoop.map((note, index) => {
-            let x = note.time * 1000 *100 / time_loop + "%";
-            let width = note.duration * 1000 *100 / time_loop + "%";
-            return (
-              <rect x={x} y="40%" rx="2px" id={index} width={width} height="20%" className="note"/>
-            );
-          })}
+          {state.currentLoop
+            .filter((e) => state.currentLoop.indexOf(e) >= state.counter)
+            .map((note, index) => {
+              let x = (note.time * 1000 * 100) / time_loop + "%";
+              let width = (note.duration * 1000 * 100) / time_loop + "%";
+              return (
+                <rect
+                  x={x}
+                  y="40%"
+                  rx="2px"
+                  id={index}
+                  width={width}
+                  height="20%"
+                  className="note"
+                />
+              );
+            })}
         </svg>
       </div>
+    </div>
   );
 }
