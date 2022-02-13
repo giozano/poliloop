@@ -10,7 +10,7 @@ export default function Recorder(props) {
     const [state, dispatch] = useStateValue();
     const [animation, setAnimation] = useState("")
 
-    let track = undefined;
+    let tracks = [];
 
     Tone.Transport.bpm.value = state.bpm;
     Tone.Transport.loop = true;
@@ -37,16 +37,24 @@ export default function Recorder(props) {
 
             Tone.Transport.start();
         }
-        else if (Tone.Transport.state=="started"){
+        else if (Tone.Transport.state=="started") {
             console.log("Record transport true");
             if (props.startRec){
                 console.log("Record salva");
-                track = new Tone.Part(function(time,value) {
-                    Synth.keys.triggerAttackRelease(value.note, value.duration, time);
-                }, state.currentLoop).start(0);
-        
-                track.loop = true;
-                track.loopEnd = props.loopTime;
+
+                for(var key in state.instruments) {
+                    var instrument = state.instruments[key];
+                    
+                    const track = new Tone.Part(function(time,value) {
+                        instrument.synth.triggerAttackRelease(value.note, value.duration, time);
+                    }, instrument.notes).start(0);
+
+                    track.loop = true;
+                    track.loopEnd = props.loopTime;
+
+                    tracks.push(track);
+                }
+
                 props.recOn(false);
                 props.recOff(true);
             }
@@ -68,12 +76,18 @@ export default function Recorder(props) {
 
         Tone.Transport.stop();
 
-        track = new Tone.Part(function(time,value) {
-            Synth.keys.triggerAttackRelease(value.note, value.duration, time);
-        }, state.currentLoop).start(0);
+        for(var key in state.instruments) {
+            var instrument = state.instruments[key];
+            
+            const track = new Tone.Part(function(time,value) {
+                instrument.synth.triggerAttackRelease(value.note, value.duration, time);
+            }, instrument.notes).start(0);
 
-        track.loop = true;
-        track.loopEnd = props.loopTime;
+            track.loop = true;
+            track.loopEnd = props.loopTime;
+
+            tracks.push(track);
+        }
 
         console.log("STOP");
     }
@@ -85,6 +99,7 @@ export default function Recorder(props) {
             console.log("PLAY");
         }
     }
+
     return(
         <div>
             <ul className="notes" style={{display:"flex", flexDirection:"column"}}>

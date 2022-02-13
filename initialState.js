@@ -1,4 +1,4 @@
-import * as Synth from '../utils/synthesizers';
+import * as Synth from './utils/synthesizers';
 
 const initialState = {
     bpm: 60,
@@ -22,7 +22,7 @@ const initialState = {
             synth: Synth.bass,
         }
     },
-    currentInstrument: 0,
+    currentInstrument: 'keys',
     currentLoop: [],
     loop: 1,
     loops:[],

@@ -31,7 +31,6 @@ export default function Track({play}) {
     );
   }
 
-
   return (
     <div className="tracks">
       {state.loops.map((loop) => {
