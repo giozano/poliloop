@@ -15,6 +15,7 @@
   min-height: 100vh;
   background: linear-gradient(180deg, white, blue);
   flex-direction:column;
+  justify-content: space-between;
   overflow: hidden;
 }
 
@@ -31,6 +32,9 @@
   border-radius:40px;
   overflow:hidden;
   background: linear-gradient(90deg,#0162c8,#55e7fc);
+}
+.barraSud{
+    display: flex;
 }
 
 ul
