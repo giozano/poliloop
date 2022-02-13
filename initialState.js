@@ -1,11 +1,27 @@
+import * as Synth from '../utils/synthesizers';
+
 const initialState = {
     bpm: 60,
     bpb: 4,
     bars: 4,
-    drums: [],
-    keys: [],
-    lead: [],
-    bass: [],
+    instruments: {
+        'drums': {
+            notes: [],
+            synth: Synth.drums,
+        },
+        'keys': {
+            notes: [],
+            synth: Synth.keys,
+        },
+        'lead': {
+            notes: [],
+            synth: Synth.lead,
+        },
+        'bass': {
+            notes: [],
+            synth: Synth.bass,
+        }
+    },
     currentInstrument: 0,
     currentLoop: [],
     loop: 1,
