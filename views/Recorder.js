@@ -20,7 +20,7 @@ export default function Recorder(props) {
 
         console.log("COUNT IN");
 
-        Tone.Transport.schedule((time) => {
+        Tone.Transport.scheduleOnce((time) => {
             props.recOn(true);
             props.recOff(false);
             console.log("RECORD");
@@ -55,11 +55,11 @@ export default function Recorder(props) {
     }
     return(
         <div>
-            <ul className="notes">
+            <ul className="notes" style={{display:"flex", flexDirection:"column"}}>
                 {
                     state.currentLoop.map((note, index) =>
                         {
-                            return <li key={index}>[{ note.note + ", " + note.duration }]</li>
+                            return <li key={index}>[{ note.note + ", " + note.time + ", " + note.duration }]</li>
                         }
                     )
                 }
