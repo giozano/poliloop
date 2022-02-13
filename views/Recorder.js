@@ -1,4 +1,5 @@
 import * as Tone from 'tone';
+import { useState } from 'react';
 import { useStateValue } from '../state';
 import * as Synth from '../utils/synthesizers';
 import { setStartRec, setStopRec } from '../action';
@@ -7,6 +8,7 @@ import Track from './Track';
 export default function Recorder(props) {
     
     const [state, dispatch] = useStateValue();
+    const [animation, setAnimation] = useState("")
 
     let track = undefined;
 
@@ -17,6 +19,8 @@ export default function Recorder(props) {
 
     function record() {
         if(props.startRec) return;
+        setAnimation("on");
+
 
         console.log("COUNT IN");
 
@@ -33,6 +37,7 @@ export default function Recorder(props) {
         if(!props.startRec) return;
         props.recOn(false);
         props.recOff(true);
+        setAnimation("");
 
         Tone.Transport.stop();
 
@@ -48,9 +53,9 @@ export default function Recorder(props) {
 
     function play() {
         if(!props.stopRec) return;
+        setAnimation("on");
 
         Tone.Transport.toggle(); 
-
         console.log("PLAY");
     }
     return(
@@ -67,6 +72,7 @@ export default function Recorder(props) {
             <button onClick={record}>Record</button>
             <button onClick={stop}>Stop</button>
             <button onClick={play}>Play</button>
+            <div style={{width:"100vw", height:"150px"}}><Track play={animation}/></div>
         </div>
     )
 }

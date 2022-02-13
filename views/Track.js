@@ -9,7 +9,7 @@ const prova = [
 
 export default function Track({play}) {
   let bpm = 60;
-  let bar = 15;
+  let bar = 4;
   let metric = 4;
   let bars = [];
   const [state, dispatch] = useStateValue();
@@ -35,11 +35,10 @@ export default function Track({play}) {
           <line x1="0" y1="0" x2="0" y2="100%" className={"cursor-line " + play}  />
           {bars}
           {state.currentLoop.map((note, index) => {
-            let x = note[0] * 1000 *100 / time_loop + "%";
-            //let width = (note[1] - note[0]) * 1000 *100 / time_loop + "%";
-            let width=2+"%"
+            let x = note.time * 1000 *100 / time_loop + "%";
+            let width = note.duration * 1000 *100 / time_loop + "%";
             return (
-              <rect x={x} y="40%" rx="0.5%"  width={width} height="20%" className="note"/>
+              <rect x={x} y="40%" rx="2px" id={index} width={width} height="20%" className="note"/>
             );
           })}
         </svg>
