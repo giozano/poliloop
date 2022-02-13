@@ -28,13 +28,14 @@ export default function Recorder(props) {
     const [state, dispatch] = useStateValue();
     const [startRec, setStartRec] = useState(false);
     const [stopRec, setStopRec] = useState(false);
-    const [animation, setAnimation] = useState("")
+   
+    
     function record() {
         if(startRec) return;
 
         setStartRec(true);
         setStopRec(false);
-        setAnimation("on");
+        
 
         Tone.Transport.scheduleRepeat((time) => {
             metronome.triggerAttackRelease("C3", "8n", time);
@@ -56,8 +57,7 @@ export default function Recorder(props) {
 
         setStartRec(false);
         setStopRec(true);
-        setAnimation("");
-
+        
         Tone.Transport.stop();
 
         props.midiInput.removeListener();
@@ -78,7 +78,6 @@ export default function Recorder(props) {
 
         console.log("PLAY");
     }
-    console.log(animation)
     return(
         <div>
             <ul className="notes">
@@ -93,7 +92,6 @@ export default function Recorder(props) {
             <button onClick={record}>Record</button>
             <button onClick={stop}>Stop</button>
             <button onClick={play}>Play</button>
-            <div style={{height:"150px" , width:"100vw"}}><Track play={animation}/></div>
         </div>
     )
 }
