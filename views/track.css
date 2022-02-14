@@ -31,7 +31,7 @@
 .cursor-line{
     stroke:rgb(255,0,0);
     stroke-width:4;
-    transform: translateX(var(--stop));
+    transform: translateX(0%);
 }
 
 .cursor-line.on{

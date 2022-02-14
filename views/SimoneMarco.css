@@ -12,6 +12,7 @@
   text-transform: uppercase;
   font-size: 14px;
   align-items: center;
+  border-radius: 0px;
 
   height: 100vh;
   background: linear-gradient(180deg, black, #5f5958);
@@ -70,7 +71,7 @@
     display: flex;
 }
 
-ul
+.ul
 {
   position:relative;
   display:flex;
@@ -78,15 +79,13 @@ ul
   align-items:center;
   justify-content:space-between;
   width:95%;
-}
-
-ul li{
-  list-style: none;
-  
+  margin: 10px;
 }
 
 
-ul li .instrument{
+
+
+.instrument{
   position: relative;
   display:inline-block;
   padding: 6px 15px;
@@ -105,7 +104,7 @@ ul li .instrument{
 }
 
 /*transitions for instrument buttons*/
-ul li .instrument:hover
+.instrument:hover
 {
   transform: scale(1.1);
   z-index: 1000;
@@ -113,7 +112,7 @@ ul li .instrument:hover
   opacity:1;
 }
 
-ul li .instrument:before
+.instrument:before
 {
   content:'';
   position: absolute;
@@ -125,7 +124,7 @@ ul li .instrument:before
   transform: skewX(35deg);
   transition: 0s;
 }
-ul li .instrument:hover:before
+.instrument:hover:before
 {
   Left: calc(100% + 100px);
   transition: 0.5s;
