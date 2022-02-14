@@ -5,12 +5,12 @@
   font-family: 'Poppins', sans-serif;
   border-radius:10px;
 }
-body
+.start
 {
   display: flex;
   justify-content:flex-start ;
   align-items: center;
-  min-height: 100vh;
+  height: 100vh;
   background: linear-gradient(180deg, black, #5f5958);
   flex-direction:column;
 }

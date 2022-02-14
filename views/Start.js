@@ -121,8 +121,59 @@ export default function Start() {
 
   if(startVisible) {
     return(
-      <div className="Start">
-          <button onClick={onStart} id="startButton">START</button>
+      <div className="start">
+          <div className="text">POLYLOOPER</div>  
+                <ul className="lista" id='menu'>
+                    <li className='lista indice' data-text="BPM"><div className='lista indice a'>BPM 
+                        <div className="slidecontainer">
+                            <input type="range" min="10" max="200" value="1" className="input slider" id="myRange" />
+                            <output id="rangevalue">0</output>
+                        </div></div>
+                    </li>
+                    <li className='lista indice' data-text="instrument"><div className='lista indice a'>instrument 
+                        <div className="custom-select" style={{width:"200px"}}>
+                            <select>
+                                <option value="0">Select</option>
+                                <option value="1">Instrument 1</option>
+                                <option value="2">Instrument 2</option>
+                                <option value="3">Instrument 3</option>
+                                <option value="4">Instrument 4</option>
+                            </select>
+                        </div>
+                    </div></li>
+      
+                    <li className='lista indice' data-text="bars"><div className='lista indice a'>bars 
+                        <input className="input" type="number" min="1" id="name" name="name" required minlength="4" maxlength="8" size="10"/>     
+                    </div></li>
+      
+                    <li className='lista indice' data-text="input"><div className='lista indice a'>input
+                        <div className="custom-select" style={{width:"200px"}}>
+                            <select>
+                                <option value="0">Select</option>
+                                <option value="1">MIDI</option>
+                                <option value="2">Microphone</option>
+                            </select>
+                        </div>  
+                    </div></li>
+      
+                    <li className='lista indice' data-text="polyrhythm"><div className='lista indice a'>polyrhythm
+                    </div></li>
+                    <li className='lista indice' data-text="start"><div className='lista indice a' onClick={onStart} id="startButton">START
+                    </div></li>
+                </ul>
+ 
+            <div className="menu">
+                <h1>Polyrhythm</h1>
+                     <div className="popup">4:3</div>
+                     <div className="popup">4:5</div>
+                     <div className="popup">4:7</div>
+                     <div className="popup"></div>
+                <h1>Resolution</h1>
+                     <div className="popup">x1</div>
+                     <div className="popup">x2</div>
+                     <div className="popup">x3</div>
+                     <div className="popup">x4</div>
+             </div>
       </div>
     )
   }

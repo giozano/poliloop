@@ -134,51 +134,51 @@ export default function Recorder(props) {
 
     return (
       <div className="body">
-        <ul>
-          <li>
+        <div className='ul'>
+          <div className='li'>
             <div className="instrument">Instrument 1:</div>
-          </li>
-          <li>
+          </div>
+          <div className='li'>
             <div className="instrument">Instrument 2:</div>
-          </li>
-          <li>
+          </div>
+          <div className='li'>
             <div className="instrument">Instrument 3:</div>
-          </li>
-          <li>
+          </div>
+          <div className='li'>
             <div className="instrument">Instrument 4:</div>
-          </li>
-          <li>
+          </div>
+          <div className='li'>
             <div className="uneditable">Input:</div>
-          </li>
-          <li>
+          </div>
+          <div className='li'>
             <div className="uneditable">Output:</div>
-          </li>
-          <li>
+          </div>
+          <div className='li'>
             <div className="uneditable">BPM:</div>
-          </li>
-          <li>
+          </div>
+          <div className='li'>
             <div className="uneditable">Metric:</div>
-          </li>
+          </div>
           <div className="instrument">Save</div>
-        </ul>
+        </div>
         <div id="track">
-          <ul
+          <div
             className="notes"
             style={{ display: "flex", flexDirection: "column" }}
           >
             {state.currentLoop.map((note, index) => {
               return (
-                <li key={index}>
+                <div key={index}>
                   [{note.note + ", " + note.time + ", " + note.duration}]
-                </li>
+                </div>
               );
             })}
-          </ul>
+          </div>
           <div style={{ width: "100vw", height: "150px" }}>
             <Track play={animation} />
           </div>
         </div>
-        <ul>
+        <div className='ul'>
           {visibilityRec()}
           <div style={{ display: "flex", width: "100%" }}>
             <div style={{ flex: "1" }}>
@@ -268,7 +268,7 @@ export default function Recorder(props) {
             <div style={{ flex: "1" }}></div>
           </div>
           {visibilityPlay()}
-        </ul>
+        </div>
       </div>
     );
 }
