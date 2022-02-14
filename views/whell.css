@@ -7,7 +7,7 @@
     height: 200px;
       
   }
-  .circle-looped{
+  #circle-looped{
       transform-origin: 50% 50%; 
       animation-name: ruota;
       animation-duration:var(--duration);
@@ -15,6 +15,7 @@
       animation-iteration-count: infinite;  
       fill:yellow;    
   }
+  /*
   @keyframes ruota {
       from { 
           transform:rotate(0deg);
@@ -23,6 +24,7 @@
           transform:rotate(360deg);
       }
   }
+  */
 
 
   .poly3-1{

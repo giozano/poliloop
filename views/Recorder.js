@@ -20,14 +20,28 @@ export default function Recorder(props) {
     Tone.Transport.loopStart = 0;
     Tone.Transport.loopEnd = props.loopTime;
 
+    // Animazione del cursore
+    let transportBar = requestAnimationFrame (
+        function cursorMove () {
+          // 
+          let cursorPosition = Tone.Transport.progress*100+"%";
+          let angularPosition = (Tone.Transport.progress%(1/state.bars))*state.bars*360+"deg";
+          let cursorTracks=document.getElementsByClassName("cursor-line");
+          for (let i=0;i<cursorTracks.length;i++){
+            cursorTracks[i].setAttribute("x1",cursorPosition);
+            cursorTracks[i].setAttribute("x2",cursorPosition);
+          }
+  
+          document.getElementById("circle-looped").style.transform="rotate("+angularPosition+")";
+          requestAnimationFrame (cursorMove);
+        }
+    );
+
     function record() {
-        //if(props.startRec) return;
-        setAnimation("on");//controllare
         setOnRecording(true)//per il bottone record
         setOnPlay(true);//per il bottone play
 
         if (Tone.Transport.state=="stopped") {
-
             console.log("COUNT IN");
 
             // Count in
@@ -37,15 +51,14 @@ export default function Recorder(props) {
             Tone.Transport.scheduleOnce((time) => {
                 props.recOn(true);
                 props.recOff(false);
-                console.log("RECORD");
+                console.log("Start recording");
             }, props.loopTime-0.01);
 
             Tone.Transport.start();
         }
         else if (Tone.Transport.state=="started") {
-            console.log("Record transport true");
-            if (props.startRec){
-                console.log("Record salva");
+            if (props.startRec) {
+                console.log("Stop recording and save");
 
                 for(var key in state.instruments) {
                     var instrument = state.instruments[key];
@@ -64,7 +77,7 @@ export default function Recorder(props) {
                 props.recOff(true);
             }
             else {
-                console.log("Record e basta");
+                console.log("Start recording while transport is playing");
                 props.recOn(true);
                 props.recOff(false);
                 console.log("RECORD");
@@ -74,10 +87,8 @@ export default function Recorder(props) {
     }
 
     function stop() {
-        //if(!props.startRec) return;
         props.recOn(false);
         props.recOff(true);
-        setAnimation("");//???
         setOnPlay(false);
         setOnRecording(false);
 
@@ -101,19 +112,24 @@ export default function Recorder(props) {
 
     function play() {
         setOnPlay(true);
-        //setAnimation("on");
         if (Tone.Transport.state==="stopped"){
-            Tone.Transport.start(); 
+            Tone.Transport.start();
             console.log("PLAY");
         }
     }
+
     function visibilityRec(){
         if(onRecording) return(<button onClick={stop} className="instrument">Record</button>)
         else return(<button onClick={record} className="instrument">Record</button>)
     }
+
     function visibilityPlay(){
         if(onPlay) return(<button onClick={stop} className="instrument">Stop</button>)
         else return(<button onClick={play} className="instrument">Play</button>)
+    }
+
+    function toggleMetronome(subdivision) {
+        state.metronomes.get(subdivision).synth.volume.value = state.metronomes.get(subdivision).synth.volume.value < 0 ? 0 : state.minVolume;
     }
 
     return (
@@ -167,16 +183,32 @@ export default function Recorder(props) {
           <div style={{ display: "flex", width: "100%" }}>
             <div style={{ flex: "1" }}>
               <div>
-                <button onClick={()=>document.getElementById('g3').style.visibility='visible'}>
+                <button onClick={() => {
+                        toggleMetronome(3);
+                        document.getElementById('g3').style.visibility='visible';
+                    }
+                }>
                   3 on
                 </button>
-                <button onclick={()=>document.getElementById('g4').style.visibility='visible'}>
+                <button onClick={() => {
+                        toggleMetronome(4);
+                        document.getElementById('g4').style.visibility='visible';
+                    }
+                }>
                   4 on
                 </button>
-                <button onclick={()=>document.getElementById('g5').style.visibility='visible'}>
+                <button onClick={() => {
+                        toggleMetronome(5);
+                        document.getElementById('g5').style.visibility='visible';   
+                    }
+                }>
                   5 on
                 </button>
-                <button onclick={()=>document.getElementById('g7').style.visibility='visible'}>
+                <button onClick={() => {
+                        toggleMetronome(7);
+                        document.getElementById('g7').style.visibility='visible';
+                    }
+                }>
                   7 on
                 </button>
               </div>
@@ -199,7 +231,7 @@ export default function Recorder(props) {
               <div class="circle">
                 <svg viewBox="0 0 120 120">
                   <circle cx="60" cy="60" r="50" fill="none" stroke="black" />
-                  <circle cx="60" cy="10" r="3" class="circle-looped" />
+                  <circle cx="60" cy="10" r="3" id="circle-looped" />
 
                   <g id="g3" class="poly3">
                     <circle cx="60" cy="10" r="3" class="poly3-1" />
@@ -221,7 +253,6 @@ export default function Recorder(props) {
                     <circle cx="60" cy="10" r="3" class="poly5-4" />
                     <circle cx="60" cy="10" r="3" class="poly5-5" />
                   </g>
-
                   <g id="g7" class="poly7">
                     <circle cx="60" cy="10" r="3" class="poly7-1" />
                     <circle cx="60" cy="10" r="3" class="poly7-2" />

@@ -12,5 +12,7 @@ export default function reducer(state, action) {
         case 'ADD LOOP':
             const loop = state.currentLoop;
             return {...state, loops: [...state.loops, loop], currentLoop:[]}
+        case 'SET METRONOMES':
+            return {...state, metronomes: action.metronomes}
     }
 }

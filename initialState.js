@@ -4,6 +4,8 @@ const initialState = {
     bpm: 60,
     bpb: 4,
     bars: 4,
+    minVolume: -40.0,
+    metronomes: {},
     instruments: {
         'drums': {
             notes: [],

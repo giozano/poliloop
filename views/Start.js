@@ -4,8 +4,7 @@ import { WebMidi } from "webmidi";
 import * as Tone from 'tone';
 import Recorder from './Recorder';
 import { useStateValue } from '../state';
-import { addNote } from '../action';
-import * as Synth from '../utils/synthesizers';
+import { addNote, setMetronomes } from '../action';
 import { polyrhythms } from '../utils/functions';
 
 export default function Start() {
@@ -27,7 +26,7 @@ export default function Start() {
     dispatch(changeInstrument(index));
   };
 
-  // To manage startRec and stopRec
+  // startRec and stopRec
   const [startRec, setStartRec] = React.useState(false);
   const [stopRec, setStopRec] = React.useState(false);
   const startRecRef = React.useRef(startRec);
@@ -40,8 +39,6 @@ export default function Start() {
     stopRecRef.current = off;
     setStopRec(off);
   };
-
-  let metronomes;
   
   function onStart() {
     if(!audioReady) startAudio();
@@ -62,11 +59,16 @@ export default function Start() {
     onMidiEnabled();
     setStartVisible(false);
     setAudioReady(true);
-    initializeMetronomes(state.bpb);
+    initializeMetronomes();
   };
 
-  function initializeMetronomes(maxSubdivision) {
-    metronomes = polyrhythms(state.bpb, maxSubdivision, metronomeLoopTime);
+  function initializeMetronomes() {
+    const metronomes = polyrhythms(metronomeLoopTime);
+    metronomes.forEach((value, key) => {
+      value.synth.volume.value = state.minVolume;
+      value.part.start(0);
+    });
+    dispatch(setMetronomes(metronomes));
   }
 
   function onMidiEnabled() {

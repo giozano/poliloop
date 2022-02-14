@@ -5,3 +5,7 @@ export function addNote(note, instrument) {
 export function addLoop() {
     return({type: 'ADD LOOP'});
 }
+
+export function setMetronomes(metronomes) {
+    return({type: 'SET METRONOMES', metronomes: metronomes});
+}

@@ -38,7 +38,7 @@ export const drums = new Tone.MembraneSynth({
     }
 }).toDestination();
 
-export const metronome = new Tone.MembraneSynth({
+export const metronome = {
     pitchDecay: 0.05,
     octaves: 3,
     oscillator: {type: 'sine'},
@@ -49,4 +49,4 @@ export const metronome = new Tone.MembraneSynth({
         release: 0.1,
         attackCurve: 'linear'
     }
-}).toDestination();
+}

@@ -1,19 +1,27 @@
 import * as Tone from 'tone';
 import * as Synth from '../utils/synthesizers';
 
+const subdivisions = [3,4,5,7];
 const metronomeHigh = "G3";
 const metronomeLow = "C3";
 
-export function polyrhythms(bpb, maxSubdivision, metronomeLoopTime) {
+export function polyrhythms(metronomeLoopTime) {
     const metronomes = new Map();
-    for(let i=bpb;i<=maxSubdivision;i++) {
+    subdivisions.forEach(function(subdivision, index) {
+        const synth = new Tone.MembraneSynth(Synth.metronome).toDestination();
         const metronome = new Tone.Part(((time, note) => {
-            Synth.metronome.triggerAttackRelease(note, "n", time);
-        }), metronomeNew(i, metronomeLoopTime)).start(0);
+            synth.triggerAttackRelease(note, "n", time);
+        }), metronomeNew(subdivision, metronomeLoopTime));
         metronome.loop = true;
         metronome.loopEnd = metronomeLoopTime;
-        metronomes.set(i,metronome);
-    }
+        metronomes.set(
+            subdivision,
+            {
+                synth: synth,
+                part: metronome,
+            }
+        );
+    });
     return metronomes;
 }
 
