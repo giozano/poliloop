@@ -160,3 +160,66 @@
     animation-iteration-count: infinite;
    }
   
+
+   .poly7-1{
+    --rotazione: calc((360deg) / 7);
+    transform-origin: 50% 50%;
+    transform:rotate(var(--rotazione));
+    animation-name: pulsa5;
+    animation-duration:var(--duration);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-delay:var(--delay);
+    
+   }
+  .poly7-2{
+    --delay: calc(var(--duration)*2/5);
+    --rotazione: calc((360deg)*2 / 7);
+    transform-origin: 50% 50%;
+    transform:rotate(var(--rotazione));
+    animation-name: pulsa5;
+    animation-duration:var(--duration);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-delay:var(--delay);
+   }
+  .poly7-3{
+    --delay: calc(var(--duration)*3/5);
+    --rotazione: calc((360deg)*3 / 7);
+    transform-origin: 50% 50%;
+    transform:rotate(var(--rotazione));
+    animation-name: pulsa5;
+    animation-duration:var(--duration);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-delay:var(--delay)
+   }
+  .poly7-4{
+    --rotazione: calc((360deg)*4 / 7);
+    transform-origin: 50% 50%;
+    transform:rotate(var(--rotazione));
+    animation-name: pulsa5;
+    animation-duration:var(--duration);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-delay:calc(var(--duration)*4/5);
+   }
+   .poly7-5{
+    --rotazione: calc((360deg)*5 / 7);
+    transform-origin: 50% 50%;
+    transform:rotate(var(--rotazione));
+    animation-name: pulsa5;
+    animation-duration:var(--duration);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+   }
+
+   .poly7-6{
+    --rotazione: calc((360deg)*6 / 7);
+    transform-origin: 50% 50%;
+    transform:rotate(var(--rotazione));
+    animation-name: pulsa5;
+    animation-duration:var(--duration);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+   }
