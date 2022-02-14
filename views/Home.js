@@ -24,7 +24,7 @@ export default function Home(){
                     </a></li>
       
                     <li data-text="bars"><a href="#">bars 
-                        <input type="number" id="name" name="name" required minlength="4" maxlength="8" size="10">     
+                        <input type="number" min="1" id="name" name="name" required minlength="4" maxlength="8" size="10"/>     
                     </a></li>
       
                     <li data-text="input"><a href="#">input
