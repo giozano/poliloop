@@ -17,3 +17,7 @@ export function setBpm(bpm) {
 export function setBars(bars) {
     return({type: 'SET BARS', bars: bars});
 }
+
+export function changeInstrument(instrument){
+    return({type: 'CHANGE INSTRUMENT', instrument: instrument})
+}

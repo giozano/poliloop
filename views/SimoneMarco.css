@@ -131,3 +131,8 @@
   transition: 0.5s;
   transition-delay:0.2s;
 }
+
+.instrument .on{
+  background-color: #fff;
+  color: #18db13;
+}
