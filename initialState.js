@@ -7,18 +7,22 @@ const initialState = {
     instruments: {
         'drums': {
             notes: [],
+            loops: [],
             synth: Synth.drums,
         },
         'keys': {
             notes: [],
+            loops: [],
             synth: Synth.keys,
         },
         'lead': {
             notes: [],
+            loops: [],
             synth: Synth.lead,
         },
         'bass': {
             notes: [],
+            loops: [],
             synth: Synth.bass,
         }
     },

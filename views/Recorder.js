@@ -1,8 +1,6 @@
 import * as Tone from 'tone';
 import { useState } from 'react';
 import { useStateValue } from '../state';
-import * as Synth from '../utils/synthesizers';
-import { setStartRec, setStopRec } from '../action';
 import Track from './Track';
 
 export default function Recorder(props) {

@@ -93,7 +93,7 @@ export default function Start() {
     input.addListener("midimessage", e => {
       // attack
       if(e.message.type==="noteon") {
-        console.log("note on");
+        console.log("note on, instrument: " + instrumentRef.current);
         state.instruments[instrumentRef.current].synth.triggerAttack(Tone.Frequency(e.data[1],"midi"), Tone.now());
         let noteCurTime = Tone.Transport.progress*loopTime-latencyOffset;
         if (noteCurTime<0) noteCurTime=0;
@@ -101,8 +101,8 @@ export default function Start() {
       }
       // release
       else if(e.message.type==="noteoff") {
-        console.log("note off");
-        state.instruments[instrumentRef.current].synth.triggerRelease(Tone.now());
+        console.log("note off, instrument: " + instrumentRef.current);
+        state.instruments[instrumentRef.current].synth.triggerRelease(Tone.Frequency(e.data[1],"midi"), Tone.now());
         const key = e.data[1];
         let duration = (e.timestamp-noteCur.get(key)[1])/1000;
         const note = {
