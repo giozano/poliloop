@@ -1,0 +1,175 @@
+:root{
+    --duration: 5000ms;
+  }
+  
+  .circle{
+    width: 200px;
+    height: 200px;
+      
+  }
+  .circle-looped{
+      transform-origin: 50% 50%; 
+      animation-name: ruota;
+      animation-duration:var(--duration);
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;  
+      fill:yellow;    
+  }
+  @keyframes ruota {
+      from { 
+          transform:rotate(0deg);
+      }
+      to {
+          transform:rotate(360deg);
+      }
+  }
+
+
+  .poly3-1{
+    --delay: calc(var(--duration)/3);
+    --rotazione: calc((360deg) / 3);
+    transform-origin: 50% 50%;
+    transform:rotate(var(--rotazione));
+    animation-name: pulsa3;
+    animation-duration:var(--duration);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-delay:var(--delay);
+    
+   }
+  .poly3-2{
+    --delay: calc(var(--duration)*2/3);
+    --rotazione: calc((360deg)*2 / 3);
+    transform-origin: 50% 50%;
+    transform:rotate(var(--rotazione));
+    animation-name: pulsa3;
+    animation-duration:var(--duration);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-delay:var(--delay);
+   }
+  .poly3-3{
+    animation-name: pulsa3;
+    animation-duration:var(--duration);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+   }
+  
+
+
+
+
+   .poly4-1{
+    --delay: calc(var(--duration)/4);
+    --rotazione: calc((360deg) / 4);
+    transform-origin: 50% 50%;
+    transform:rotate(var(--rotazione));
+    animation-name: pulsa4;
+    animation-duration:var(--duration);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-delay:var(--delay);
+    
+   }
+  .poly4-2{
+    --delay: calc(var(--duration)*2/4);
+    --rotazione: calc((360deg)*2 / 4);
+    transform-origin: 50% 50%;
+    transform:rotate(var(--rotazione));
+    animation-name: pulsa4;
+    animation-duration:var(--duration);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-delay:var(--delay);
+   }
+  .poly4-3{
+    --delay: calc(var(--duration)*3/4);
+    --rotazione: calc((360deg)*3 / 4);
+    transform-origin: 50% 50%;
+    transform:rotate(var(--rotazione));
+    animation-name: pulsa4;
+    animation-duration:var(--duration);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-delay:var(--delay)
+   }
+   .poly4-4{
+    animation-name: pulsa4;
+    animation-duration:var(--duration);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+   }
+
+
+
+
+
+
+
+
+  .poly5-1{
+    --delay: calc(var(--duration)/5);
+    --rotazione: calc((360deg) / 5);
+    transform-origin: 50% 50%;
+    transform:rotate(var(--rotazione));
+    animation-name: pulsa5;
+    animation-duration:var(--duration);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-delay:var(--delay);
+    
+   }
+  .poly5-2{
+    --delay: calc(var(--duration)*2/5);
+    --rotazione: calc((360deg)*2 / 5);
+    transform-origin: 50% 50%;
+    transform:rotate(var(--rotazione));
+    animation-name: pulsa5;
+    animation-duration:var(--duration);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-delay:var(--delay);
+   }
+  .poly5-3{
+    --delay: calc(var(--duration)*3/5);
+    --rotazione: calc((360deg)*3 / 5);
+    transform-origin: 50% 50%;
+    transform:rotate(var(--rotazione));
+    animation-name: pulsa5;
+    animation-duration:var(--duration);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-delay:var(--delay)
+   }
+  .poly5-4{
+    --rotazione: calc((360deg)*4 / 5);
+    transform-origin: 50% 50%;
+    transform:rotate(var(--rotazione));
+    animation-name: pulsa5;
+    animation-duration:var(--duration);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-delay:calc(var(--duration)*4/5);
+   }
+   .poly5-5{
+    animation-name: pulsa5;
+    animation-duration:var(--duration);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+   }
+  @keyframes pulsa3 {
+    0% {r:3}
+    2% {r:5; fill: green}
+    10% {r:3; fill: black}
+  }
+  @keyframes pulsa4 {
+    0% {r:3}
+    2% {r:5; fill: rgb(235, 5, 5)}
+    10% {r:3; fill: black}
+  }
+  @keyframes pulsa5 {
+    0% {r:3}
+    2% {r:5; fill: rgb(0, 247, 255)}
+    10% {r:3; fill: black}
+  }
+  

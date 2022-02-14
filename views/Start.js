@@ -127,10 +127,12 @@ export default function Start() {
   else {
     return (
       <div className="Start">
-        <select name="midiInput" id="midiInputSelect" onChange={onMidiInputChange}>
-          {WebMidi.inputs.map((device, index) => <option key={index} value={device.name}>{device.name}</option>)}
-        </select>
-        <button onClick={() => setStartVisible(true)}>Back</button>
+        {
+          //<select name="midiInput" id="midiInputSelect" onChange={onMidiInputChange}>
+          //{WebMidi.inputs.map((device, index) => <option key={index} value={device.name}>{device.name}</option>)}
+        //</select>
+        //<button onClick={() => setStartVisible(true)}>Back</button>
+  }
         <Recorder 
           loopTime = {loopTime}
           startRec = {startRecRef.current}
