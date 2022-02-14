@@ -159,19 +159,4 @@
     animation-timing-function: linear;
     animation-iteration-count: infinite;
    }
-  @keyframes pulsa3 {
-    0% {r:3}
-    2% {r:5; fill: green}
-    10% {r:3; fill: black}
-  }
-  @keyframes pulsa4 {
-    0% {r:3}
-    2% {r:5; fill: rgb(235, 5, 5)}
-    10% {r:3; fill: black}
-  }
-  @keyframes pulsa5 {
-    0% {r:3}
-    2% {r:5; fill: rgb(0, 247, 255)}
-    10% {r:3; fill: black}
-  }
   

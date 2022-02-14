@@ -65,6 +65,7 @@
 #track{
   /*width:98%;*/
   height:100%;
+  overflow: auto;
    
 }
 .barraSud{

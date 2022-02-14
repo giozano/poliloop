@@ -1,7 +1,7 @@
 import * as Synth from './utils/synthesizers';
 
 const initialState = {
-    bpm: 60,
+    bpm: 60.0,
     bpb: 4,
     bars: 4,
     minVolume: -40.0,

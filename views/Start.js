@@ -1,10 +1,10 @@
 import './Start.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { WebMidi } from "webmidi";
 import * as Tone from 'tone';
 import Recorder from './Recorder';
 import { useStateValue } from '../state';
-import { addNote, setMetronomes } from '../action';
+import { addNote, setMetronomes, setBpm, setBars } from '../action';
 import { polyrhythms } from '../utils/functions';
 
 export default function Start() {
@@ -39,9 +39,14 @@ export default function Start() {
     stopRecRef.current = off;
     setStopRec(off);
   };
-  
-  function onStart() {
+
+  useEffect(() => {
     if(!audioReady) startAudio();
+  });
+
+  function onStart() {
+    initializeMetronomes();
+    setStartVisible(false);
   }
 
   async function startAudio() {
@@ -50,29 +55,32 @@ export default function Start() {
     } catch(e) {
       console.log("Tone could not be started - " + e);
     }
-    console.log("Tone is ready");
+    // console.log("Tone is ready");
     try {
       await WebMidi.enable();
     } catch(e) {
       console.log("WebMidi could not be started - " + e);
     }
     onMidiEnabled();
-    setStartVisible(false);
     setAudioReady(true);
-    initializeMetronomes();
   };
 
   function initializeMetronomes() {
+    Tone.Transport.bpm.value = state.bpm;
+    Tone.Transport.loop = true;
+    Tone.Transport.loopStart = 0;
+    Tone.Transport.loopEnd = loopTime;
+
     const metronomes = polyrhythms(metronomeLoopTime);
     metronomes.forEach((value, key) => {
-      value.synth.volume.value = state.minVolume;
+      // value.synth.volume.value = state.minVolume;
       value.part.start(0);
     });
     dispatch(setMetronomes(metronomes));
   }
 
   function onMidiEnabled() {
-    console.log("WebMidi is ready");
+    // console.log("WebMidi is ready");
     if (WebMidi.inputs.length < 1) {
       console.log("WebMidi: No device detected");
     }
@@ -119,82 +127,81 @@ export default function Start() {
     });
   }
 
+  function handleBpmInput(e) {
+    dispatch(setBpm(e.target.value));
+  }
+
+  function handleBarsInput(e) {
+    dispatch(setBars(e.target.value));
+  }
+
   if(startVisible) {
     return(
       <div className="start">
-          <div className="text">POLYLOOPER</div>  
-                <ul className="lista" id='menu'>
-                    <li className='lista indice' data-text="BPM"><div className='lista indice a'>BPM 
-                        <div className="slidecontainer">
-                            <input type="range" min="10" max="200" value="1" className="input slider" id="myRange" />
-                            <output id="rangevalue">0</output>
-                        </div></div>
-                    </li>
-                    <li className='lista indice' data-text="instrument"><div className='lista indice a'>instrument 
-                        <div className="custom-select" style={{width:"200px"}}>
-                            <select>
-                                <option value="0">Select</option>
-                                <option value="1">Instrument 1</option>
-                                <option value="2">Instrument 2</option>
-                                <option value="3">Instrument 3</option>
-                                <option value="4">Instrument 4</option>
-                            </select>
-                        </div>
-                    </div></li>
-      
-                    <li className='lista indice' data-text="bars"><div className='lista indice a'>bars 
-                        <input className="input" type="number" min="1" id="name" name="name" required minlength="4" maxlength="8" size="10"/>     
-                    </div></li>
-      
-                    <li className='lista indice' data-text="input"><div className='lista indice a'>input
-                        <div className="custom-select" style={{width:"200px"}}>
-                            <select>
-                                <option value="0">Select</option>
-                                <option value="1">MIDI</option>
-                                <option value="2">Microphone</option>
-                            </select>
-                        </div>  
-                    </div></li>
-      
-                    <li className='lista indice' data-text="polyrhythm"><div className='lista indice a'>polyrhythm
-                    </div></li>
-                    <li className='lista indice' data-text="start"><div className='lista indice a' onClick={onStart} id="startButton">START
-                    </div></li>
-                </ul>
- 
-            <div className="menu">
-                <h1>Polyrhythm</h1>
-                     <div className="popup">4:3</div>
-                     <div className="popup">4:5</div>
-                     <div className="popup">4:7</div>
-                     <div className="popup"></div>
-                <h1>Resolution</h1>
-                     <div className="popup">x1</div>
-                     <div className="popup">x2</div>
-                     <div className="popup">x3</div>
-                     <div className="popup">x4</div>
-             </div>
+        <div className="text">POLYLOOPER</div>
+        <ul className="lista" id='menu'>
+          <li className='lista indice' data-text="BPM">
+            <div className='lista indice a'>BPM
+              <div className="slidecontainer">
+                <input type="range" min="10" max="200" value={state.bpm} className="input slider" id="myRange" onChange={handleBpmInput} />
+                <output id="rangevalue">{state.bpm}</output>
+              </div>
+            </div>
+          </li>
+
+          <li className='lista indice' data-text="bars">
+            <div className='lista indice a'>
+              bars
+              <input className="input" type="number" value={state.bars} min="1" id="name" name="name" required minlength="4" maxlength="8" size="10" onInput={handleBarsInput}/>
+            </div>
+          </li>
+
+          <li className='lista indice' data-text="input">
+            <div className='lista indice a'>
+              input
+              <div className="custom-select" style={{ width: "200px" }}>
+                <select name="midiInput" id="midiInputSelect" onChange={onMidiInputChange}>
+                  {WebMidi.inputs.map((device, index) => <option key={index} value={device.name}>{device.name}</option>)}
+                </select>
+              </div>
+            </div>
+          </li>
+          
+          <li className='lista indice' data-text="start">
+            <div className='lista indice a' onClick={onStart} id="startButton">
+              START
+            </div>
+          </li>
+        </ul>
       </div>
     )
   }
   else {
     return (
       <div className="Start">
-        {
-          //<select name="midiInput" id="midiInputSelect" onChange={onMidiInputChange}>
-          //{WebMidi.inputs.map((device, index) => <option key={index} value={device.name}>{device.name}</option>)}
-        //</select>
-        //<button onClick={() => setStartVisible(true)}>Back</button>
-  }
         <Recorder 
           loopTime = {loopTime}
           startRec = {startRecRef.current}
           stopRec = {stopRecRef.current}
           recOn = {recOn}
           recOff = {recOff}
-          changeInstrument = {changeInstrument}
-        />
+          changeInstrument = {changeInstrument} />
       </div>
     );
   }
 }
+
+/*
+<div className="menu">
+          <h1>Polyrhythm</h1>
+          <div className="popup">4:3</div>
+          <div className="popup">4:5</div>
+          <div className="popup">4:7</div>
+          <div className="popup"></div>
+          <h1>Resolution</h1>
+          <div className="popup">x1</div>
+          <div className="popup">x2</div>
+          <div className="popup">x3</div>
+          <div className="popup">x4</div>
+</div>
+*/

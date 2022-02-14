@@ -11,18 +11,7 @@ export default function Home(){
                             <output id="rangevalue">0</output>
                         </div></a>
                     </li>
-                    <li data-text="instrument"><a href="#">instrument 
-                        <div className="custom-select" style="width:200px;">
-                            <select>
-                                <option value="0">Select</option>
-                                <option value="1">Instrument 1</option>
-                                <option value="2">Instrument 2</option>
-                                <option value="3">Instrument 3</option>
-                                <option value="4">Instrument 4</option>
-                            </select>
-                        </div>
-                    </a></li>
-      
+    
                     <li data-text="bars"><a href="#">bars 
                         <input type="number" min="1" id="name" name="name" required minlength="4" maxlength="8" size="10"/>     
                     </a></li>

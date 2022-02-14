@@ -7,15 +7,16 @@ const metronomeLow = "C3";
 
 export function polyrhythms(metronomeLoopTime) {
     const metronomes = new Map();
-    subdivisions.forEach(function(subdivision, index) {
+    subdivisions.forEach(function(value, index) {
         const synth = new Tone.MembraneSynth(Synth.metronome).toDestination();
+        const metronomeArray = metronomeNew(value, metronomeLoopTime);
         const metronome = new Tone.Part(((time, note) => {
             synth.triggerAttackRelease(note, "n", time);
-        }), metronomeNew(subdivision, metronomeLoopTime));
+        }), metronomeArray);
         metronome.loop = true;
         metronome.loopEnd = metronomeLoopTime;
         metronomes.set(
-            subdivision,
+            value,
             {
                 synth: synth,
                 part: metronome,
@@ -28,7 +29,7 @@ export function polyrhythms(metronomeLoopTime) {
 // superimpose=state.bpb*state.bars
 function metronomeNew(superimpose, metronomeLoopTime) {
     let interval = metronomeLoopTime/superimpose;
-    var poly_new = new Array();
+    var poly_new = [];
     for (let i=0;i<superimpose;i++){
         if(i===0) poly_new.push([0,metronomeHigh]);
         else poly_new.push([i*interval,metronomeLow]);

@@ -14,5 +14,9 @@ export default function reducer(state, action) {
             return {...state, loops: [...state.loops, loop], currentLoop:[]}
         case 'SET METRONOMES':
             return {...state, metronomes: action.metronomes}
+        case 'SET BPM':
+            return {...state, bpm: action.bpm}
+        case 'SET BARS':
+            return {...state, bars: action.bars}
     }
 }

@@ -15,11 +15,6 @@ export default function Recorder(props) {
 
     let tracks = [];
 
-    Tone.Transport.bpm.value = state.bpm;
-    Tone.Transport.loop = true;
-    Tone.Transport.loopStart = 0;
-    Tone.Transport.loopEnd = props.loopTime;
-
     // Animazione del cursore
     let transportBar = requestAnimationFrame (
         function cursorMove () {
@@ -112,7 +107,7 @@ export default function Recorder(props) {
 
     function play() {
         setOnPlay(true);
-        if (Tone.Transport.state==="stopped"){
+        if (Tone.Transport.state==="stopped") {
             Tone.Transport.start();
             console.log("PLAY");
         }
@@ -129,7 +124,8 @@ export default function Recorder(props) {
     }
 
     function toggleMetronome(subdivision) {
-        state.metronomes.get(subdivision).synth.volume.value = state.metronomes.get(subdivision).synth.volume.value < 0 ? 0 : state.minVolume;
+      console.log(state.metronomes);
+      state.metronomes.get(subdivision).synth.volume.value = state.metronomes.get(subdivision).synth.volume.value < 0 ? 0 : state.minVolume;
     }
 
     return (
@@ -151,9 +147,6 @@ export default function Recorder(props) {
             <div className="uneditable">Input:</div>
           </div>
           <div className='li'>
-            <div className="uneditable">Output:</div>
-          </div>
-          <div className='li'>
             <div className="uneditable">BPM:</div>
           </div>
           <div className='li'>
@@ -162,68 +155,82 @@ export default function Recorder(props) {
           <div className="instrument">Save</div>
         </div>
         <div id="track">
-          <div
-            className="notes"
-            style={{ display: "flex", flexDirection: "column" }}
-          >
-            {state.currentLoop.map((note, index) => {
-              return (
-                <div key={index}>
-                  [{note.note + ", " + note.time + ", " + note.duration}]
-                </div>
-              );
-            })}
-          </div>
           <div style={{ width: "100vw", height: "150px" }}>
             <Track play={animation} />
           </div>
         </div>
         <div className='ul'>
-          {visibilityRec()}
           <div style={{ display: "flex", width: "100%" }}>
-            <div style={{ flex: "1" }}>
+            <div style={{ flex: "3" }}>
               <div>
-                <button onClick={() => {
+                <button className="instrument" onClick={() => {
                         toggleMetronome(3);
-                        document.getElementById('g3').style.visibility='visible';
-                    }
+                        const visibile = document.getElementById('g3').style.visibility;
+                        console.log(visibile)
+                        switch (visibile) {
+                          case 'visible':
+                            document.getElementById('g3').style.visibility = 'hidden';
+                            break;
+                          case 'hidden':
+                            document.getElementById('g3').style.visibility = 'visible';
+                            break;
+                          default:
+                            document.getElementById('g3').style.visibility = 'hidden';
+                        }
+                  }
                 }>
-                  3 on
+                  3
                 </button>
-                <button onClick={() => {
+                <button className="instrument" onClick={() => {
                         toggleMetronome(4);
-                        document.getElementById('g4').style.visibility='visible';
+                        const visibile = document.getElementById('g4').style.visibility;
+                        switch (visibile) {
+                          case 'visible':
+                            document.getElementById('g4').style.visibility = 'hidden';
+                            break;
+                          case 'hidden':
+                            document.getElementById('g4').style.visibility = 'visible';
+                            break;
+                          default:
+                            document.getElementById('g4').style.visibility = 'hidden';
+                        }
                     }
                 }>
-                  4 on
+                  4
                 </button>
-                <button onClick={() => {
+                <button className="instrument" onClick={() => {
                         toggleMetronome(5);
-                        document.getElementById('g5').style.visibility='visible';   
+                        const visibile = document.getElementById('g5').style.visibility;
+                        switch (visibile) {
+                          case 'visible':
+                            document.getElementById('g5').style.visibility = 'hidden';
+                            break;
+                          case 'hidden':
+                            document.getElementById('g5').style.visibility = 'visible';
+                            break;
+                          default:
+                            document.getElementById('g5').style.visibility = 'hidden';
+                        }
                     }
                 }>
-                  5 on
+                  5
                 </button>
-                <button onClick={() => {
+                <button className="instrument" onClick={() => {
                         toggleMetronome(7);
-                        document.getElementById('g7').style.visibility='visible';
+                        const visibile = document.getElementById('g7').style.visibility;
+                        switch (visibile) {
+                          case 'visible':
+                            document.getElementById('g7').style.visibility = 'hidden';
+                            break;
+                          case 'hidden':
+                            document.getElementById('g7').style.visibility = 'visible';
+                            break;
+                          default:
+                            document.getElementById('g7').style.visibility = 'hidden';
+                        }
                     }
                 }>
-                  7 on
-                </button>
-              </div>
-              <div>
-                <button onClick={()=>document.getElementById('g3').style.visibility='hidden'}>
-                  3 off
-                </button>
-                <button onClick={()=>document.getElementById('g4').style.visibility='hidden'}>
-                  4 off
-                </button>
-                <button onClick={()=>document.getElementById('g5').style.visibility='hidden'}>
-                  5 off
-                </button>
-                <button onClick={()=>document.getElementById('g7').style.visibility='hidden'}>
-                  7 off
+                  7
                 </button>
               </div>
             </div>
@@ -267,6 +274,7 @@ export default function Recorder(props) {
             </div>
             <div style={{ flex: "1" }}></div>
           </div>
+          {visibilityRec()}
           {visibilityPlay()}
         </div>
       </div>
