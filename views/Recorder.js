@@ -4,6 +4,8 @@ import { useStateValue } from '../state';
 import Track from './Track';
 import './SimoneMarco.css';
 import './whell.css';
+import { changeInstrument } from '../action';
+
 
 export default function Recorder(props) {
     
@@ -132,16 +134,16 @@ export default function Recorder(props) {
       <div className="body">
         <div className='ul'>
           <div className='li'>
-            <div className="instrument">Instrument 1:</div>
+            <div className="instrument" onClick={()=>dispatch(changeInstrument('drums'))}>DRUMS</div>
           </div>
           <div className='li'>
-            <div className="instrument">Instrument 2:</div>
+            <div className="instrument" onClick={()=>dispatch(changeInstrument('keys'))}>KEYS</div>
           </div>
           <div className='li'>
-            <div className="instrument">Instrument 3:</div>
+            <div className="instrument" onClick={()=>dispatch(changeInstrument('lead'))}>LEAD</div>
           </div>
           <div className='li'>
-            <div className="instrument">Instrument 4:</div>
+            <div className="instrument" onClick={()=>dispatch(changeInstrument('bass'))}>BASS</div>
           </div>
           <div className='li'>
             <div className="uneditable">Input:</div>
