@@ -213,16 +213,16 @@ export default function Recorder(props) {
                 </button>
               </div>
               <div>
-                <button onclick={()=>document.getElementById('g3').style.visibility='hidden'}>
+                <button onClick={()=>document.getElementById('g3').style.visibility='hidden'}>
                   3 off
                 </button>
-                <button onclick={()=>document.getElementById('g4').style.visibility='hidden'}>
+                <button onClick={()=>document.getElementById('g4').style.visibility='hidden'}>
                   4 off
                 </button>
-                <button onclick={()=>document.getElementById('g5').style.visibility='hidden'}>
+                <button onClick={()=>document.getElementById('g5').style.visibility='hidden'}>
                   5 off
                 </button>
-                <button onclick={()=>document.getElementById('g7').style.visibility='hidden'}>
+                <button onClick={()=>document.getElementById('g7').style.visibility='hidden'}>
                   7 off
                 </button>
               </div>
