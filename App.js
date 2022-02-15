@@ -3,7 +3,7 @@ import Start from './views/Start';
 import { StateProvider } from "./state";
 import initialState from "./initialState";
 import reducer from "./reducer"
-
+import SimoneMarco from './views/SimoneMarco';
 
 export default function App() {
 
@@ -11,7 +11,7 @@ export default function App() {
     <div className='App'>
       <StateProvider reducer={reducer} initialState={initialState}>
         <Start/>
-      </StateProvider>
+     </StateProvider>
     </div>
   );
 }
