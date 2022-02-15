@@ -37,7 +37,7 @@ export default function Recorder(props) {
         setOnRecording(true)//per il bottone record
         setOnPlay(true);//per il bottone play
 
-        if (Tone.Transport.state=="stopped") {
+        if (Tone.Transport.state==="stopped") {
             console.log("COUNT IN");
 
             // Count in
@@ -51,7 +51,7 @@ export default function Recorder(props) {
 
             Tone.Transport.start();
         }
-        else if (Tone.Transport.state=="started") {
+        else if (Tone.Transport.state==="started") {
             if (props.startRec) {
                 console.log("STRUMENTI ", state.instruments);
                 for(var key in state.instruments) {
@@ -76,7 +76,6 @@ export default function Recorder(props) {
                 console.log("RECORD");
             }
         }
-
     }
 
     function stop() {
@@ -91,7 +90,7 @@ export default function Recorder(props) {
         console.log("STRUMENTI ", state.instruments);
         for(var key in state.instruments) {
             const track = new Tone.Part(function(time,value) {
-                state.instruments[key].synth.triggerAttackRelease(value.note, value.duration, time);
+                state.instruments[key].synth.triggerAttackRelease(Tone.Frequency(value.note,"midi"), value.duration, time);
             }, state.instruments[key].notes).start(0);
 
             track.loop = true;
