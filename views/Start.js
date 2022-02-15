@@ -75,7 +75,7 @@ export default function Start() {
     const metronomes = polyrhythms(metronomeLoopTime);
     metronomes.forEach((value, key) => {
       // value.synth.volume.value = state.minVolume;
-      // value.part.start(0);
+      value.part.start(0);
     });
     dispatch(setMetronomes(metronomes));
   }
@@ -190,18 +190,3 @@ export default function Start() {
     );
   }
 }
-
-/*
-<div className="menu">
-          <h1>Polyrhythm</h1>
-          <div className="popup">4:3</div>
-          <div className="popup">4:5</div>
-          <div className="popup">4:7</div>
-          <div className="popup"></div>
-          <h1>Resolution</h1>
-          <div className="popup">x1</div>
-          <div className="popup">x2</div>
-          <div className="popup">x3</div>
-          <div className="popup">x4</div>
-</div>
-*/
