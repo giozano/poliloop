@@ -141,11 +141,24 @@ export default function Recorder(props) {
   }
 
   function toggleMetronome(subdivision) {
-    console.log(state.metronomes);
-    state.metronomes.get(subdivision).synth.volume.value =
-      state.metronomes.get(subdivision).synth.volume.value < 0
-        ? 0
-        : state.minVolume;
+    // If the clicked metronome is muted
+    if(state.metronomes.get(subdivision).volume.mute === true) {
+      state.metronomes.get(subdivision).volume.mute = false;
+      state.metronomes.get(1).volume.mute = false;
+    }
+    // Otherwise
+    else {
+      state.metronomes.get(subdivision).volume.mute = true;
+      let isLastOne = true;
+      state.metronomes.forEach((value, key) => {
+        console.log(key, value);
+        if(key !== 1 && key !== subdivision && value.volume.mute === false) isLastOne = false;
+      });
+      console.log("isLastOne: " + isLastOne);
+      if(isLastOne) state.metronomes.get(1).volume.mute = true;
+    }
+
+    
   }
 
   if (document.getElementById("kick") !== null)

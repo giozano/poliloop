@@ -73,8 +73,8 @@ export default function Start() {
 
   function initializeMetronomes() {
     const metronomes = polyrhythms(metronomeLoopTime);
+    console.log("metronomes: ", metronomes);
     metronomes.forEach((value, key) => {
-      // value.synth.volume.value = state.minVolume;
       value.part.start(0);
     });
     dispatch(setMetronomes(metronomes));

@@ -4,7 +4,7 @@ const initialState = {
     bpm: 60.0,
     bpb: 4,
     bars: 4,
-    minVolume: -40.0,
+    minVolume: -60.0,
     metronomes: {},
     instruments: {
         'kick': {
