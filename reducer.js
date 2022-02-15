@@ -3,6 +3,7 @@ export default function reducer(state, action) {
         case 'ADD NOTE':
             let newInstruments = {};
             Object.assign(newInstruments, state.instruments);
+            console.log(newInstruments[action.instrument]);
             newInstruments[action.instrument].notes.push(action.note);
             console.log("NEW INSTRUMENTS ", newInstruments);
             if(state.currentLoop.length!=0 && state.currentLoop[state.currentLoop.length-1].time>action.note.time)

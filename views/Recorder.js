@@ -2,7 +2,7 @@ import * as Tone from 'tone';
 import { useState } from 'react';
 import { useStateValue } from '../state';
 import Track from './Track';
-import './SimoneMarco.css';
+import './recorder.css';
 import './whell.css';
 
 
@@ -152,8 +152,7 @@ export default function Recorder(props) {
             <Track play={animation} />
           </div>
         </div>
-        <div className='ul'>
-          <div style={{ display: "flex", width: "100%" }}>
+        <div className='ul sud'>
             <div style={{ flex: "3" }}>
               <div>
                 <button className="instrument" onClick={() => {
@@ -265,10 +264,12 @@ export default function Recorder(props) {
                 </svg>
               </div>
             </div>
-            <div style={{ flex: "1" }}></div>
-          </div>
-          {visibilityRec()}
-          {visibilityPlay()}
+            <div id="control-buttons">
+              {visibilityRec()}
+              {visibilityPlay()}
+            </div>
+          
+          
         </div>
       </div>
     );
