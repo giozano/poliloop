@@ -10,7 +10,7 @@ export default function App() {
   return (
     <div className='App'>
       <StateProvider reducer={reducer} initialState={initialState}>
-        <Start/>
+        <SimoneMarco/>
      </StateProvider>
     </div>
   );
