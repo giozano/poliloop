@@ -27,7 +27,7 @@ export function polyrhythms(metronomeLoopTime) {
 }
 
 // superimpose=state.bpb*state.bars
-function metronomeNew(superimpose, metronomeLoopTime) {
+function metronomeNew(superimpose, metronomeLoopTime, first) {
     let interval = metronomeLoopTime/superimpose;
     var poly_new = [];
     for (let i=0;i<superimpose;i++){

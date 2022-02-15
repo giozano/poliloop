@@ -47,6 +47,10 @@ export default function Start() {
   });
 
   function onStart() {
+    Tone.Transport.bpm.value = state.bpm;
+    Tone.Transport.loop = true;
+    Tone.Transport.loopStart = 0;
+    Tone.Transport.loopEnd = loopTime;
     initializeMetronomes();
     setStartVisible(false);
   }
@@ -68,15 +72,10 @@ export default function Start() {
   };
 
   function initializeMetronomes() {
-    Tone.Transport.bpm.value = state.bpm;
-    Tone.Transport.loop = true;
-    Tone.Transport.loopStart = 0;
-    Tone.Transport.loopEnd = loopTime;
-
     const metronomes = polyrhythms(metronomeLoopTime);
     metronomes.forEach((value, key) => {
       // value.synth.volume.value = state.minVolume;
-      value.part.start(0);
+      // value.part.start(0);
     });
     dispatch(setMetronomes(metronomes));
   }
@@ -185,7 +184,7 @@ export default function Start() {
           stopRec = {stopRecRef.current}
           recOn = {recOn}
           recOff = {recOff}
-          currentInstrument = {currentInstrument}
+          currentInstrument = {instrumentRef.current}
           changeInstrument = {changeInstrument} />
       </div>
     );

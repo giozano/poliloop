@@ -48,7 +48,7 @@ export default function Recorder(props) {
       }, props.loopTime - 0.01);
 
       Tone.Transport.start();
-    } else if (Tone.Transport.state == "started") {
+    } else if (Tone.Transport.state === "started") {
       if (props.startRec) {
         console.log("STRUMENTI ", state.instruments);
         for (var key in state.instruments) {
@@ -89,9 +89,27 @@ export default function Recorder(props) {
     Tone.Transport.stop();
 
     console.log("STRUMENTI ", state.instruments);
-    for (var key in state.instruments) {
-      const track = new Tone.Part(function (time, value) {
+
+    const strumenti = state.instruments;
+
+    Object.keys(strumenti).forEach(function(strumento) {
+      new Tone.Part(function(time, value) {
         console.log("NOTE ON");
+        console.log("Key: " + strumento);
+        console.log("Value: ", strumenti[strumento]);
+        strumenti[strumento].synth.triggerAttackRelease(
+          Tone.Frequency(value.note, "midi"),
+          value.duration,
+          time
+        );
+      }, strumenti[strumento].notes).start(0);
+    });
+
+    /*
+    for (var key in state.instruments) {
+      console.log("key " + key);
+      const track = new Tone.Part(function(time, value) {
+        console.log("NOTE ON", state.instruments[key]);
         state.instruments[key].synth.triggerAttackRelease(
           Tone.Frequency(value.note, "midi"),
           value.duration,
@@ -104,6 +122,7 @@ export default function Recorder(props) {
 
       tracks.push(track);
     }
+    */
   }
 
   function play() {
