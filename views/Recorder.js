@@ -150,8 +150,7 @@ export default function Recorder(props) {
         : state.minVolume;
   }
 
-  if (document.getElementById("kick") !== null) 
- 
+  if (document.getElementById("kick") !== null)
     switch (props.currentInstrument) {
       case "kick":
         document.getElementById("kick").classList.add("on");
@@ -259,8 +258,8 @@ export default function Recorder(props) {
                     document.getElementById("4:3").classList.add("on");
                     break;
                   default:
-                    document.getElementById("g3").style.visibility = "hidden";
-                    document.getElementById("4:3").classList = "instrument";
+                    document.getElementById("g3").style.visibility = "visible";
+                    document.getElementById("4:3").classList = "instrument on";
                 }
               }}
             >
@@ -282,8 +281,8 @@ export default function Recorder(props) {
                     document.getElementById("4:4").classList.add("on");
                     break;
                   default:
-                    document.getElementById("g4").style.visibility = "hidden";
-                    document.getElementById("4:4").classList = "instrument";
+                    document.getElementById("g4").style.visibility = "visible";
+                    document.getElementById("4:4").classList = "instrument on";
                 }
               }}
             >
@@ -305,8 +304,8 @@ export default function Recorder(props) {
                     document.getElementById("4:5").classList.add("on");
                     break;
                   default:
-                    document.getElementById("g5").style.visibility = "hidden";
-                    document.getElementById("4:5").classList = "instrument";
+                    document.getElementById("g5").style.visibility = "visible";
+                    document.getElementById("4:5").classList = "instrument on";
                 }
               }}
             >
@@ -328,8 +327,8 @@ export default function Recorder(props) {
                     document.getElementById("4:7").classList.add("on");
                     break;
                   default:
-                    document.getElementById("g7").style.visibility = "hidden";
-                    document.getElementById("4:7").classList = "instrument";
+                    document.getElementById("g7").style.visibility = "visible";
+                    document.getElementById("4:7").classList = "instrument on";
                 }
               }}
             >

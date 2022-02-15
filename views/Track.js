@@ -32,9 +32,9 @@ export default function Track({play}) {
     );
   }
   
-  let reversedLoop = state.loops//.reverse();
-  reversedLoop.map((loop) => {
-    tracks.push(
+  
+  state.loops.map((loop) => {
+    tracks.unshift(
       <div className="track">
         <svg width="100%" height="100%">
           <line

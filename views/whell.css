@@ -126,3 +126,8 @@
     transform:rotate(var(--rotazione));
     fill:white
    }
+
+
+   #g3, #g4, #g5, #g7 {
+     visibility: hidden;
+   }
