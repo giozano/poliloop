@@ -121,7 +121,7 @@ export default function Start() {
           "duration": duration
         };
         noteCur.delete(key);
-        if(startRecRef.current) dispatch(addNote(note, instrumentRef.current));
+        if(startRecRef.current) {console.log("chiamata dispatch"); dispatch(addNote(note, instrumentRef.current))};
       }
     });
   }
@@ -133,6 +133,7 @@ export default function Start() {
   function handleBarsInput(e) {
     dispatch(setBars(e.target.value));
   }
+
 
   if(startVisible) {
     return(

@@ -22,25 +22,27 @@
 }
 
 /*format for instrument buttons*/
+
 .instrument{
-  position:relative;
-  display: inline-block;
-  padding:12px 3px;
+  position: relative;
+  display:inline-block;
+  padding: 6px 15px;
   margin: 10px 10px;
-  color: white;
-  text-decoration:none;
-  text-transform:uppercase;
   font-size:18px;
-  letter-spacing:2px;
+  text-decoration:none;
+  background: #18db13;
+  color: #fff;
+  text-transform: uppercase;
   border-radius:40px;
-  overflow:hidden;
-  background:  #18db13; 
+  letter-spacing:2px;
+  overflow: hidden;
+ transition: 0.5s;
+  z-index:1;
    box-shadow:
     0 0 5px 5px #fff,
     0 0 10px 10px #18db13,
     0 0 5px 5px #fff; 
 }
-
 /*format for input,output,bpm,metric,save,record and play buttons (uneditable)*/
 .uneditable{
   position:relative;
@@ -66,6 +68,7 @@
   /*width:98%;*/
   height:100%;
   overflow: auto;
+  padding-top: 2%;
    
 }
 
@@ -83,23 +86,7 @@
 
 
 
-.instrument{
-  position: relative;
-  display:inline-block;
-  padding: 6px 15px;
-  text-decoration:none;
-  background: #18db13;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing:2px;
-  overflow: hidden;
- transition: 0.5s;
-  z-index:1;
-   box-shadow:
-    0 0 5px 5px #fff,
-    0 0 10px 10px #18db13,
-    0 0 5px 5px #fff; 
-}
+
 
 /*transitions for instrument buttons*/
 .instrument:hover
@@ -129,7 +116,7 @@
   transition-delay:0.2s;
 }
 
-.instrument .on{
+.instrument.on{
   background-color: #fff;
   color: #18db13;
 }
@@ -145,7 +132,7 @@
 }
 .circle{
   box-shadow:
-    0 0 5px 5px #fff,
-    0 0 10px 10px #18db13,
-    0 0 5px 5px #fff;
+    0 0 2px 2px #fff,
+    0 0 5px 5px #18db13,
+    0 0 2px 2px #fff;
 }

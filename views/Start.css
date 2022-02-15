@@ -13,6 +13,7 @@
   height: 100vh;
   background: linear-gradient(180deg, black, #5f5958);
   flex-direction:column;
+  border-radius: 0;
 }
 
 /*list of starting inputs*/
