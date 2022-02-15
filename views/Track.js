@@ -9,6 +9,7 @@ const prova = [
 
 export default function Track({play}) {
   let bars = [];
+  let tracks=[];
   const [state, dispatch] = useStateValue();
 
   let bar=state.bars
@@ -30,41 +31,44 @@ export default function Track({play}) {
       <line x1={position} y1="0" x2={position} y2="100%" className="bars" />
     );
   }
+  
+  let reversedLoop = state.loops//.reverse();
+  reversedLoop.map((loop) => {
+    tracks.push(
+      <div className="track">
+        <svg width="100%" height="100%">
+          <line
+            x1="0"
+            y1="0"
+            x2="0"
+            y2="100%"
+            className={"cursor-line " + play}
+          />
+          {bars}
+          {loop.map((note, index) => {
+            let x = (note.time * 1000 * 100) / time_loop + "%";
+            let width = (note.duration * 1000 * 100) / time_loop + "%";
+            return (
+              <rect
+                x={x}
+                y="40%"
+                rx="2px"
+                id={index}
+                width={width}
+                height="20%"
+                className="note"
+              />
+            );
+          })}
+        </svg>
+      </div>
+    );
+  });
+  
 
   return (
     <div className="tracks">
-      {state.loops.map((loop) => {
-        return (
-          <div className="track">
-            <svg width="100%" height="100%">
-              <line
-                x1="0"
-                y1="0"
-                x2="0"
-                y2="100%"
-                className={"cursor-line " + play}
-              />
-              {bars}
-              {
-                loop.map((note, index) => {
-                  let x = (note.time * 1000 * 100) / time_loop + "%";
-                  let width = (note.duration * 1000 * 100) / time_loop + "%";
-                  return (
-                    <rect
-                      x={x}
-                      y="40%"
-                      rx="2px"
-                      id={index}
-                      width={width}
-                      height="20%"
-                      className="note"
-                    />
-                  );
-                })}
-            </svg>
-          </div>
-        );
-      })}
+      
       <div className="track">
         <svg width="100%" height="100%">
           <line
@@ -94,6 +98,7 @@ export default function Track({play}) {
             })}
         </svg>
       </div>
+      {tracks}
     </div>
   );
 }

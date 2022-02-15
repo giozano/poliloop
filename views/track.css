@@ -5,7 +5,7 @@
 
 .track{
     border: solid 4px rgb(65, 65, 65);
-    height: 10vh;
+    height: 5vh;
     margin: 1%;
     padding:1%;
     border-radius: 10px;
@@ -18,7 +18,7 @@
 }
 
 .bars{
-    stroke:rgb(107, 107, 107);
+    stroke:rgb(138, 138, 138);
     stroke-width:2;
 }
 
