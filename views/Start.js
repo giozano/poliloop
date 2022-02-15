@@ -20,10 +20,12 @@ export default function Start() {
   const metronomeLoopTime = loopTime/state.bars;
 
   // currentInstument
-  const instrumentRef = React.useRef(state.currentInstrument);
-  const changeInstrument = index => {
-    instrumentRef.current = index;
-    dispatch(changeInstrument(index));
+  const [currentInstrument, setCurrentInstrument] = React.useState('keys');
+  const instrumentRef = React.useRef(currentInstrument);
+  const changeInstrument = instrument => {
+    console.log("NEW INSTRUMENT " + instrument);
+    instrumentRef.current = instrument;
+    setCurrentInstrument(instrument);
   };
 
   // startRec and stopRec
@@ -103,7 +105,6 @@ export default function Start() {
     input.addListener("midimessage", e => {
       // attack
       if(e.message.type==="noteon") {
-        console.log("note on, instrument: " + instrumentRef.current);
         state.instruments[instrumentRef.current].synth.triggerAttack(Tone.Frequency(e.data[1],"midi"), Tone.now());
         let noteCurTime = Tone.Transport.progress*loopTime-latencyOffset;
         if (noteCurTime<0) noteCurTime=0;
@@ -111,7 +112,6 @@ export default function Start() {
       }
       // release
       else if(e.message.type==="noteoff") {
-        console.log("note off, instrument: " + instrumentRef.current);
         state.instruments[instrumentRef.current].synth.triggerRelease(Tone.Frequency(e.data[1],"midi"), Tone.now());
         const key = e.data[1];
         let duration = (e.timestamp-noteCur.get(key)[1])/1000;
@@ -121,7 +121,6 @@ export default function Start() {
           "duration": duration
         };
         noteCur.delete(key);
-        console.log(startRecRef.current);
         if(startRecRef.current) dispatch(addNote(note, instrumentRef.current));
       }
     });
@@ -185,6 +184,7 @@ export default function Start() {
           stopRec = {stopRecRef.current}
           recOn = {recOn}
           recOff = {recOff}
+          currentInstrument = {currentInstrument}
           changeInstrument = {changeInstrument} />
       </div>
     );

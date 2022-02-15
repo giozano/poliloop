@@ -7,6 +7,16 @@ export const keys = new Tone.PolySynth(Tone.Synth, {
     },
 }).toDestination();
 
+export const kick = new Tone.MembraneSynth({
+    envelope: {
+        sustain: 0,
+        attack: 0.02,
+        decay: 0.8
+    },
+    octaves: 10,
+    pitchDecay: 0.01,
+}).toDestination();
+
 export const bass = new Tone.MonoSynth({
     volume: -10,
     envelope: {
@@ -23,20 +33,7 @@ export const bass = new Tone.MonoSynth({
     }
 }).toDestination();
 
-export const lead = new Tone.FMSynth();
-
-export const drums = new Tone.MembraneSynth({
-    pitchDecay: 0.05,
-    octaves: 3,
-    oscillator: {type: 'sine'},
-    envelope: {
-        attack: 0.015,
-        decay: 0.01,
-        sustain: 0.001,
-        release: 0.1,
-        attackCurve: 'linear'
-    }
-}).toDestination();
+export const lead = new Tone.FMSynth().toDestination();
 
 export const metronome = {
     pitchDecay: 0.05,

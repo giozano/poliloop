@@ -7,28 +7,23 @@ const initialState = {
     minVolume: -40.0,
     metronomes: {},
     instruments: {
-        'drums': {
+        'kick': {
             notes: [],
-            loops:[],
-            synth: Synth.drums,
+            synth: Synth.kick,
         },
         'keys': {
             notes: [],
-            loops: [],
             synth: Synth.keys,
         },
         'lead': {
             notes: [],
-            loops: [],
             synth: Synth.lead,
         },
         'bass': {
             notes: [],
-            loops: [],
             synth: Synth.bass,
         }
     },
-    currentInstrument: 'keys',
     currentLoop: [],
     loop: 1,
     loops:[],

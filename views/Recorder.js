@@ -4,7 +4,6 @@ import { useStateValue } from '../state';
 import Track from './Track';
 import './SimoneMarco.css';
 import './whell.css';
-import { changeInstrument } from '../action';
 
 
 export default function Recorder(props) {
@@ -48,20 +47,18 @@ export default function Recorder(props) {
             Tone.Transport.scheduleOnce((time) => {
                 props.recOn(true);
                 props.recOff(false);
-                console.log("Start recording");
             }, props.loopTime-0.01);
 
             Tone.Transport.start();
         }
         else if (Tone.Transport.state=="started") {
             if (props.startRec) {
-                console.log("Stop recording and save");
-
+                console.log("STRUMENTI ", state.instruments);
                 for(var key in state.instruments) {
                     var instrument = state.instruments[key];
                     
                     const track = new Tone.Part(function(time,value) {
-                        instrument.synth.triggerAttackRelease(value.note, value.duration, time);
+                      instrument.synth.triggerAttackRelease(value.note, value.duration, time);
                     }, instrument.notes).start(0);
 
                     track.loop = true;
@@ -74,7 +71,6 @@ export default function Recorder(props) {
                 props.recOff(true);
             }
             else {
-                console.log("Start recording while transport is playing");
                 props.recOn(true);
                 props.recOff(false);
                 console.log("RECORD");
@@ -84,6 +80,7 @@ export default function Recorder(props) {
     }
 
     function stop() {
+        console.log("STOP");
         props.recOn(false);
         props.recOff(true);
         setOnPlay(false);
@@ -91,20 +88,17 @@ export default function Recorder(props) {
 
         Tone.Transport.stop();
 
+        console.log("STRUMENTI ", state.instruments);
         for(var key in state.instruments) {
-            var instrument = state.instruments[key];
-            
             const track = new Tone.Part(function(time,value) {
-                instrument.synth.triggerAttackRelease(value.note, value.duration, time);
-            }, instrument.notes).start(0);
+                state.instruments[key].synth.triggerAttackRelease(value.note, value.duration, time);
+            }, state.instruments[key].notes).start(0);
 
             track.loop = true;
             track.loopEnd = props.loopTime;
 
             tracks.push(track);
         }
-
-        console.log("STOP");
     }
 
     function play() {
@@ -134,25 +128,22 @@ export default function Recorder(props) {
       <div className="body">
         <div className='ul'>
           <div className='li'>
-            <div className="instrument" onClick={()=>dispatch(changeInstrument('drums'))}>DRUMS</div>
+            <div className="instrument" onClick={() => props.changeInstrument('kick')}>KICK</div>
           </div>
           <div className='li'>
-            <div className="instrument" onClick={()=>dispatch(changeInstrument('keys'))}>KEYS</div>
+            <div className="instrument" onClick={() => props.changeInstrument('keys')}>KEYS</div>
           </div>
           <div className='li'>
-            <div className="instrument" onClick={()=>dispatch(changeInstrument('lead'))}>LEAD</div>
+            <div className="instrument" onClick={() => props.changeInstrument('lead')}>LEAD</div>
           </div>
           <div className='li'>
-            <div className="instrument" onClick={()=>dispatch(changeInstrument('bass'))}>BASS</div>
+            <div className="instrument" onClick={() => props.changeInstrument('bass')}>BASS</div>
           </div>
           <div className='li'>
-            <div className="uneditable">Input:</div>
+            <div className="uneditable">BPM: {state.bpm}</div>
           </div>
           <div className='li'>
-            <div className="uneditable">BPM:</div>
-          </div>
-          <div className='li'>
-            <div className="uneditable">Metric:</div>
+            <div className="uneditable">Metric: {state.bpb + "/4"}</div>
           </div>
           <div className="instrument">Save</div>
         </div>
