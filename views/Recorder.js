@@ -35,6 +35,11 @@ export default function Recorder(props) {
     setOnRecording(true); //per il bottone record
     setOnPlay(true); //per il bottone play
 
+    // Start metronomes if stopped
+    state.metronomes.forEach((value, key) => {
+      value.part.start(0);
+    });
+
     if (Tone.Transport.state == "stopped") {
       console.log("COUNT IN");
 
@@ -105,6 +110,9 @@ export default function Recorder(props) {
   function play() {
     setOnPlay(true);
     if (Tone.Transport.state === "stopped") {
+      state.metronomes.forEach((value, key) => {
+        value.part.stop();
+      });
       Tone.Transport.start();
       console.log("PLAY");
     }
