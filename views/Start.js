@@ -152,7 +152,7 @@ export default function Start() {
           <li className='lista indice' data-text="bars">
             <div className='lista indice a'>
               bars
-              <input className="input" type="number" value={state.bars} min="1" id="name" name="name" required minlength="4" maxlength="8" size="10" onInput={handleBarsInput}/>
+              <input className="input" type="number" value={state.bars} min="1" id="name" name="name" required minLength="4" maxLength="8" size="10" onInput={handleBarsInput}/>
             </div>
           </li>
 

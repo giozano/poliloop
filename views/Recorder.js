@@ -55,6 +55,7 @@ export default function Recorder(props) {
           var instrument = state.instruments[key];
 
           const track = new Tone.Part(function(time, value) {
+            console.log("NOTE ON");
             instrument.synth.triggerAttackRelease(
               Tone.Frequency(value.note, "midi"),
               value.duration,
@@ -90,6 +91,7 @@ export default function Recorder(props) {
     console.log("STRUMENTI ", state.instruments);
     for (var key in state.instruments) {
       const track = new Tone.Part(function (time, value) {
+        console.log("NOTE ON");
         state.instruments[key].synth.triggerAttackRelease(
           Tone.Frequency(value.note, "midi"),
           value.duration,
@@ -143,7 +145,6 @@ export default function Recorder(props) {
   }
 
   function toggleMetronome(subdivision) {
-    console.log(state.metronomes);
     state.metronomes.get(subdivision).synth.volume.value =
       state.metronomes.get(subdivision).synth.volume.value < 0
         ? 0
@@ -337,39 +338,39 @@ export default function Recorder(props) {
           </div>
         </div>
         <div style={{ flex: "1" }}>
-          <div class="circle">
+          <div className="circle">
             <svg viewBox="0 0 120 120">
               <circle cx="60" cy="60" r="50" fill="none" id="wheel" />
               <circle cx="60" cy="10" r="3" id="circle-looped" />
 
-              <g id="g3" class="poly3">
-                <circle cx="60" cy="10" r="3" class="poly3-1" />
-                <circle cx="60" cy="10" r="3" class="poly3-2" />
-                <circle cx="60" cy="10" r="3" class="poly3-3" />
+              <g id="g3" className="poly3">
+                <circle cx="60" cy="10" r="3" className="poly3-1" />
+                <circle cx="60" cy="10" r="3" className="poly3-2" />
+                <circle cx="60" cy="10" r="3" className="poly3-3" />
               </g>
 
-              <g id="g4" class="poly4">
-                <circle cx="60" cy="10" r="3" class="poly4-1" />
-                <circle cx="60" cy="10" r="3" class="poly4-2" />
-                <circle cx="60" cy="10" r="3" class="poly4-3" />
-                <circle cx="60" cy="10" r="3" class="poly4-4" />
+              <g id="g4" className="poly4">
+                <circle cx="60" cy="10" r="3" className="poly4-1" />
+                <circle cx="60" cy="10" r="3" className="poly4-2" />
+                <circle cx="60" cy="10" r="3" className="poly4-3" />
+                <circle cx="60" cy="10" r="3" className="poly4-4" />
               </g>
 
-              <g id="g5" class="poly5">
-                <circle cx="60" cy="10" r="3" class="poly5-1" />
-                <circle cx="60" cy="10" r="3" class="poly5-2" />
-                <circle cx="60" cy="10" r="3" class="poly5-3" />
-                <circle cx="60" cy="10" r="3" class="poly5-4" />
-                <circle cx="60" cy="10" r="3" class="poly5-5" />
+              <g id="g5" className="poly5">
+                <circle cx="60" cy="10" r="3" className="poly5-1" />
+                <circle cx="60" cy="10" r="3" className="poly5-2" />
+                <circle cx="60" cy="10" r="3" className="poly5-3" />
+                <circle cx="60" cy="10" r="3" className="poly5-4" />
+                <circle cx="60" cy="10" r="3" className="poly5-5" />
               </g>
-              <g id="g7" class="poly7">
-                <circle cx="60" cy="10" r="3" class="poly7-1" />
-                <circle cx="60" cy="10" r="3" class="poly7-2" />
-                <circle cx="60" cy="10" r="3" class="poly7-3" />
-                <circle cx="60" cy="10" r="3" class="poly7-4" />
-                <circle cx="60" cy="10" r="3" class="poly7-5" />
-                <circle cx="60" cy="10" r="3" class="poly7-6" />
-                <circle cx="60" cy="10" r="3" class="poly7-7" />
+              <g id="g7" className="poly7">
+                <circle cx="60" cy="10" r="3" className="poly7-1" />
+                <circle cx="60" cy="10" r="3" className="poly7-2" />
+                <circle cx="60" cy="10" r="3" className="poly7-3" />
+                <circle cx="60" cy="10" r="3" className="poly7-4" />
+                <circle cx="60" cy="10" r="3" className="poly7-5" />
+                <circle cx="60" cy="10" r="3" className="poly7-6" />
+                <circle cx="60" cy="10" r="3" className="poly7-7" />
               </g>
             </svg>
           </div>
