@@ -54,9 +54,9 @@ export default function Recorder(props) {
         for (var key in state.instruments) {
           var instrument = state.instruments[key];
 
-          const track = new Tone.Part(function (time, value) {
+          const track = new Tone.Part(function(time, value) {
             instrument.synth.triggerAttackRelease(
-              value.note,
+              Tone.Frequency(value.note, "midi"),
               value.duration,
               time
             );
@@ -91,7 +91,7 @@ export default function Recorder(props) {
     for (var key in state.instruments) {
       const track = new Tone.Part(function (time, value) {
         state.instruments[key].synth.triggerAttackRelease(
-          value.note,
+          Tone.Frequency(value.note, "midi"),
           value.duration,
           time
         );
