@@ -21,7 +21,3 @@ export function setBars(bars) {
 export function changeInstrument(instrument){
     return({type: 'CHANGE INSTRUMENT', instrument: instrument})
 }
-
-export function addNoteInstrument(note, instrument){
-    return({type: "ADD NOTE INSTRUMENT", note: note, instrument: instrument})
-}
