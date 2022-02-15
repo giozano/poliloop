@@ -117,7 +117,7 @@ export default function Start() {
         let duration = (e.timestamp-noteCur.get(key)[1])/1000;
         const note = {
           "time": noteCur.get(key)[0],
-          "note": Tone.Frequency(key,"midi"),
+          "note": key,
           "duration": duration
         };
         noteCur.delete(key);
