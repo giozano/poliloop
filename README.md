@@ -1,7 +1,7 @@
 # polylooper
 
 VIDEO PRESENTATION:
-- https://youtu.be/ohEJvS58IEY
+- https://youtu.be/2xFcgkzgyH8
 
 REQUIREMENTS:
 - https://webmidijs.org/
