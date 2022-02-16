@@ -1,4 +1,4 @@
-# poliloop
+# polylooper
 
 VIDEO PRESENTATION:
 - https://youtu.be/ohEJvS58IEY
