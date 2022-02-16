@@ -13,22 +13,29 @@ export default function Start() {
   const [audioReady, setAudioReady] = useState(false);
   const [midiInput, setMidiInput] = useState(undefined);
   const [startVisible, setStartVisible]= useState(true);
+  const [loopTime, setLoopTime] = useState(16);
 
   const latencyOffset = 0.01;
   const noteCur = new Map();
-  const loopTime = (60/state.bpm)*state.bars*state.bpb;
+  
   const metronomeLoopTime = loopTime/state.bars;
-
-  console.log("loopTime: ", loopTime);
+  
+  const loopTimeRef = React.useRef(loopTime);
+  const newLoopTime = time => {
+    loopTimeRef.current = time;
+    setLoopTime(time);
+  };
+  useEffect(()=>{newLoopTime((60/state.bpm)*state.bars*state.bpb)},[state.bpm,state.bars,state.bpb])
 
   // loopCounter
-  const [loopCounter, setLoopCounter] = useState(-loopTime);
+  const [loopCounter, setLoopCounter] = useState(0);
   const loopCounterRef = React.useRef(loopCounter);
   const incrementLoop = newLoop => {
     console.log("NEW LOOP " + newLoop);
     loopCounterRef.current = newLoop;
     setLoopCounter(newLoop);
   };
+  useEffect(()=>{incrementLoop(-loopTime)},[loopTime])
 
   // currentInstument
   const [currentInstrument, setCurrentInstrument] = React.useState('keys');
@@ -65,9 +72,9 @@ export default function Start() {
 
     // Loop counter callback
     Tone.Transport.schedule((time) => {
-      console.log("CHIAMATA CALLBACK")
-      incrementLoop(loopCounterRef.current+loopTime);
-    }, loopTime-0.005);
+      console.log("CHIAMATA CALLBACK",loopTimeRef.current)
+      incrementLoop(loopCounterRef.current+loopTimeRef.current);
+    }, loopTimeRef.current-0.005);
 
     initializeMetronomes();
     setStartVisible(false);
@@ -119,7 +126,7 @@ export default function Start() {
       // attack
       if(e.message.type==="noteon") {
         state.instruments[instrumentRef.current].synth.triggerAttack(Tone.Frequency(e.data[1],"midi"), Tone.now());
-        let noteCurTime = Tone.Transport.progress*loopTime-latencyOffset;
+        let noteCurTime = Tone.Transport.progress*loopTimeRef.current-latencyOffset;
         if (noteCurTime<0) noteCurTime=0;
         noteCur.set(e.data[1],[noteCurTime,e.timestamp]);
       }
@@ -134,8 +141,8 @@ export default function Start() {
           "duration": duration,
           "absTime": noteCur.get(key)[0]+loopCounterRef.current,
         };
-        if(note.time + note.duration > loopTime-0.005) {
-          note["absTime"] = note["absTime"]-loopTime;
+        if(note.time + note.duration > loopTimeRef.current-0.005) {
+          note["absTime"] = note["absTime"]-loopTimeRef.current;
         }
         noteCur.delete(key);
         if(startRecRef.current) {console.log("chiamata dispatch"); dispatch(addNote(note, instrumentRef.current))};

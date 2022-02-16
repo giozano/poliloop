@@ -32,8 +32,8 @@ export default function Recorder(props) {
   );
 
   function record() {
-    setOnRecording(true); //per il bottone record
-    setOnPlay(true); //per il bottone play
+    if(onRecording) setOnRecording(false); //per il bottone record
+    else {setOnPlay(true); setOnRecording(true)}; //per il bottone play
 
     // Start metronomes if stopped
     state.metronomes.forEach((value, key) => {
@@ -121,7 +121,7 @@ export default function Recorder(props) {
   function visibilityRec() {
     if (onRecording)
       return (
-        <button onClick={stop} className="instrument on">
+        <button onClick={record} className="instrument on">
           Record
         </button>
       );

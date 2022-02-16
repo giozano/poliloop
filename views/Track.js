@@ -21,8 +21,6 @@ export default function Track({play}) {
   let time_loop = (metric * bar * 60000) / bpm;
   let time_loop_ms = time_loop + "ms";
 
-  console.log("time_loop: ", time_loop);
-
   document.documentElement.style.setProperty("--loop-time", time_loop_ms);
 
   let position;
@@ -48,6 +46,7 @@ export default function Track({play}) {
           />
           {bars}
           {loop.map((note, index) => {
+            
             let x = (note.time * 1000 * 100) / time_loop + "%";
             let width = (note.duration * 1000 * 100) / time_loop + "%";
             return (

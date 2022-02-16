@@ -1,7 +1,7 @@
 export default function reducer(state, action) {
     switch(action.type) {
         case 'ADD NOTE':
-            console.log("absTime: ", action.note.absTime);
+            console.log("absTime: ", action.note.time);
             let loopNow=Math.floor(action.note.absTime/((60/state.bpm)*state.bars*state.bpb))
             if(loopNow>state.loop) {
                 let newState = {
