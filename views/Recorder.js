@@ -4,6 +4,7 @@ import { useStateValue } from "../state";
 import Track from "./Track";
 import "./recorder.css";
 import "./whell.css";
+import { metronome } from "../utils/synthesizers";
 
 export default function Recorder(props) {
   const [state, dispatch] = useStateValue();
@@ -45,12 +46,12 @@ export default function Recorder(props) {
 
       // Count in
       let startCount = props.loopTime - (60 / state.bpm) * state.bpb - 0.001;
-      Tone.Transport.position = startCount;
+      Tone.Transport.position = 0;
 
       Tone.Transport.scheduleOnce((time) => {
         props.recOn(true);
         props.recOff(false);
-      }, props.loopTime - 0.01);
+      }, props.metronomeLoopTime);
 
       Tone.Transport.start();
     } 
@@ -95,9 +96,6 @@ export default function Recorder(props) {
 
     Object.keys(strumenti).forEach(function(strumento) {
       new Tone.Part(function(time, value) {
-        console.log("NOTE ON");
-        console.log("Key: " + strumento);
-        console.log("Value: ", strumenti[strumento]);
         strumenti[strumento].synth.triggerAttackRelease(
           Tone.Frequency(value.note, "midi"),
           value.duration,
@@ -159,7 +157,6 @@ export default function Recorder(props) {
       state.metronomes.get(subdivision).volume.mute = true;
       let isLastOne = true;
       state.metronomes.forEach((value, key) => {
-        console.log(key, value);
         if(key !== 1 && key !== subdivision && value.volume.mute === false) isLastOne = false;
       });
       console.log("isLastOne: " + isLastOne);

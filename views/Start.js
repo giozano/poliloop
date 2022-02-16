@@ -31,7 +31,6 @@ export default function Start() {
   const [loopCounter, setLoopCounter] = useState(0);
   const loopCounterRef = React.useRef(loopCounter);
   const incrementLoop = newLoop => {
-    console.log("NEW LOOP " + newLoop);
     loopCounterRef.current = newLoop;
     setLoopCounter(newLoop);
   };
@@ -145,7 +144,10 @@ export default function Start() {
           note["absTime"] = note["absTime"]-loopTimeRef.current;
         }
         noteCur.delete(key);
-        if(startRecRef.current) {console.log("chiamata dispatch"); dispatch(addNote(note, instrumentRef.current))};
+        if(startRecRef.current || (loopCounter.current===0 && note.time > metronomeLoopTime-0.01)) {
+          console.log("ADD NOTE", note);
+          dispatch(addNote(note, instrumentRef.current));
+        };
       }
     });
   }
@@ -205,6 +207,7 @@ export default function Start() {
       <div className="Start">
         <Recorder 
           loopTime = {loopTime}
+          metronomeLoopTime = {metronomeLoopTime}
           startRec = {startRecRef.current}
           stopRec = {stopRecRef.current}
           recOn = {recOn}
