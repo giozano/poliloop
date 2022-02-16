@@ -19,6 +19,17 @@ export default function Start() {
   const loopTime = (60/state.bpm)*state.bars*state.bpb;
   const metronomeLoopTime = loopTime/state.bars;
 
+  console.log("loopTime: ", loopTime);
+
+  // loopCounter
+  const [loopCounter, setLoopCounter] = useState(-loopTime);
+  const loopCounterRef = React.useRef(loopCounter);
+  const incrementLoop = newLoop => {
+    console.log("NEW LOOP " + newLoop);
+    loopCounterRef.current = newLoop;
+    setLoopCounter(newLoop);
+  };
+
   // currentInstument
   const [currentInstrument, setCurrentInstrument] = React.useState('keys');
   const instrumentRef = React.useRef(currentInstrument);
@@ -51,6 +62,13 @@ export default function Start() {
     Tone.Transport.loop = true;
     Tone.Transport.loopStart = 0;
     Tone.Transport.loopEnd = loopTime;
+
+    // Loop counter callback
+    Tone.Transport.schedule((time) => {
+      console.log("CHIAMATA CALLBACK")
+      incrementLoop(loopCounterRef.current+loopTime);
+    }, loopTime-0.005);
+
     initializeMetronomes();
     setStartVisible(false);
   }
@@ -113,8 +131,12 @@ export default function Start() {
         const note = {
           "time": noteCur.get(key)[0],
           "note": key,
-          "duration": duration
+          "duration": duration,
+          "absTime": noteCur.get(key)[0]+loopCounterRef.current,
         };
+        if(note.time + note.duration > loopTime-0.005) {
+          note["absTime"] = note["absTime"]-loopTime;
+        }
         noteCur.delete(key);
         if(startRecRef.current) {console.log("chiamata dispatch"); dispatch(addNote(note, instrumentRef.current))};
       }

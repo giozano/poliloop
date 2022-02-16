@@ -25,7 +25,7 @@ const initialState = {
         }
     },
     currentLoop: [],
-    loop: 1,
+    loop: 0,
     loops:[],
     counter:0
 }
