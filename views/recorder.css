@@ -136,3 +136,18 @@
     0 0 5px 5px #18db13,
     0 0 2px 2px #fff;
 }
+
+.sliders{
+  -webkit-appearance: none;
+  border-radius: 5px;
+  opacity: 0.7; 
+  background: #18db13;
+  width: 10%px;
+  box-shadow:
+    0 0 2px 2px #fff,
+    0 0 5px 5px #18db13,
+    0 0 2px 2px #fff;
+  justify-content: space-between;
+  margin-left: 34px;
+  margin-right: 34px;
+}

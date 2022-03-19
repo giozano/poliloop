@@ -256,7 +256,20 @@ export default function Recorder(props) {
         </div>
       </div>
       <div className="ul sud">
-        <div style={{ flex: "3" }}>
+        <div style= {{ flex: "3"}} >
+
+        <input type="range" min="0" max="100"  orient="vertical" className="sliders"/>
+        
+                
+        <input type="range" min="0" max="100"  orient="vertical" className="sliders"/>
+        
+                
+        <input type="range" min="0" max="100"  orient="vertical" className="sliders"/>
+        
+
+        <input type="range" min="0" max="100"  orient="vertical" className="sliders"/>
+        
+
           <div>
             <button
               id="4:3"
